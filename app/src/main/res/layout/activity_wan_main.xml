@@ -10,7 +10,14 @@
     >
 
     <TextView
+        android:id="@+id/tv_index"
         android:text="引导页"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_start_activity"
+        android:layout_below="@+id/tv_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start"/>
 </RelativeLayout>
