@@ -1,0 +1,19 @@
+*******************2016-3-19 13:07:21 胡泽明 ******************************
+
+涉及类： GSONTOOL
+
+关于gson进行泛型解析的时候报错
+
+java.lang.ClassCastException: com.google.gson.internal.StringMap cannot be cast to **** （自定义的实体类）
+
+csdn blog ：http://blog.csdn.net/gstormspire/article/details/7638638
+
+大致 编译期泛型擦除导致 运行时无法正确的进行类型转化
+
+解决办法： 直接将解析类型作为参数传递给gson解析，保证编译器进行编译检查的时候就能确定类型
+
+*******************2016-3-19 13:07:21 胡泽明 ******************************
+
+
+
+
