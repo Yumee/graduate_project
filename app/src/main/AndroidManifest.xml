@@ -26,6 +26,11 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme"
             />
+        <activity
+            android:name=".common.RegisterActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme"
+            />
 
     </application>
 
