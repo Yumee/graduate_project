@@ -79,13 +79,20 @@
 
         <Button
             android:id="@+id/btn_regi"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/btn_regi"/>
+            android:text="学生注册"/>
         <Button
-            android:layout_marginLeft="50dp"
+            android:id="@+id/btn_shop_regi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="商家注册"/>
+        <Button
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/btn_login"
             />

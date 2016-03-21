@@ -1,6 +1,7 @@
 package neu.quwanme.common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText et_username, et_pwd ;
     TextView tv_forgetPwd;
-    Button btn_login,btn_regi;
+    Button btn_login,btn_regi,btnShopRegi;
     RadioButton chooseUser,chooseShop;
     private Context mContxt;
 
@@ -61,13 +62,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_regi = (Button) findViewById(R.id.btn_regi);
+        btnShopRegi = (Button) findViewById(R.id.btn_shop_regi);
 
 //        设置监听器
         tv_forgetPwd.setOnClickListener(this);
         btn_regi.setOnClickListener(this);
         btn_login.setOnClickListener(this);
+        btnShopRegi.setOnClickListener(this);
 
-        initData();
+//        initData();
 
     }
     public void initData() {
@@ -98,7 +101,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
             case R.id.btn_regi:
-                Toast.makeText(this,"点击了注册按钮",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"点击了学生注册按钮",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,RegisterActivity.class).putExtra("regi_usertype","student"));
+                break;
+            case R.id.btn_shop_regi:
+                Toast.makeText(this,"点击了学生注册按钮",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,RegisterActivity.class).putExtra("regi_usertype","shop"));
                 break;
             case R.id.tv_forgetPwd:
                 Toast.makeText(this,"忘记密码",Toast.LENGTH_SHORT).show();

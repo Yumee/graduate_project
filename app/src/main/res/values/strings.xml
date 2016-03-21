@@ -10,6 +10,5 @@
     <string name="error_field_required">This field is required</string>
     <string name="forget_password">忘记密码？</string>
     <string name="btn_login">登陆</string>
-    <string name="btn_regi">去注册</string>
 
 </resources>

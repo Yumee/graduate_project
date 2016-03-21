@@ -18,6 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import neu.quwanme.CONFIG.OfficalUrl;
+import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
 import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
@@ -149,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
             case R.id.btn_shop_regi:
                 if (checked()) {
-
+                    registeUser();
                 } else {
                     TOAST.ToastShort(this, "商家信息不完整!");
                 }
@@ -165,16 +166,21 @@ public class RegisterActivity extends AppCompatActivity {
      * @return
      */
     public boolean checked() {
-
-        //检测输入
-        if (etUsername.getText() == null || etPassword == null || etNickname == null ||  etNumber == null || etAge == null ) {
-            return false;
+        if (IsStudent) {
+            //检测输入
+            if (etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
+                return false;
+            }
+            //检测选择项
+            if ((!userSexBoy.isChecked() && !userSexGirl.isChecked())) {
+                return false;
+            }
+        } else {
+            if (etShopcity == null || etShopname == null){
+                return false;
+            }
         }
-        //检测选择项
-        if ((!userSexBoy.isChecked() && !userSexGirl.isChecked())) {
-            return false;
-        }
-        return true;
+            return true;
     }
 
     public void registeUser() {
@@ -207,7 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (status == NetWorker.HTTP_OK){
                     Map<String,Integer> map = GSONTOOLS.getMap(result,Map.class);
                     // TODO: 2016/3/21 再重新请求用户信息放入本地，然后跳转到首页
-                    LogUtil.d("hzm"," 创建 用户返回值 "+map.get("status"));
+                    LogUtil.d("hzm"," 创建 用户返回值 "+map.get(Status_Code.Status_COde));
                 }
             }
         });

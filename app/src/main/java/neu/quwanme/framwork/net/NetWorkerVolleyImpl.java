@@ -45,7 +45,7 @@ public class NetWorkerVolleyImpl {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                LogUtil.e(CONFIG.MYTAG,"volley get error "+volleyError.toString());
+                LogUtil.e(CONFIG.MYTAG,"volley get error "+volleyError.getMessage()+" "+volleyError.toString());
                 if (volleyError.networkResponse != null) {
                     int index = url.lastIndexOf("http");
                     if (index > 7) {
