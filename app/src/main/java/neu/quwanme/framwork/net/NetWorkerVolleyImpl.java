@@ -2,6 +2,7 @@ package neu.quwanme.framwork.net;
 
 import android.graphics.Bitmap;
 import android.util.Config;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -29,7 +30,6 @@ public class NetWorkerVolleyImpl {
     public NetWorkerVolleyImpl() {
 
             mrequestQueue = Volley.newRequestQueue(WanApplication.getAppContext());
-
     }
 
     public void get(final String url,final NetWorker.ICallback callback,final Object... params) {
@@ -70,6 +70,7 @@ public class NetWorkerVolleyImpl {
             }
         };
 
+       LogUtil.d("hzm", stringRequest.getBodyContentType());
         mrequestQueue.add(stringRequest);
     }
 

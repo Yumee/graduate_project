@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import neu.quwanme.bean.School;
+
 
 /**
  * Created by Lonie233 on 2016/3/17.
@@ -39,7 +41,6 @@ public class GSONTOOLS {
     /**
      * 获取list
      * @param jsonString
-     * @param cls
      * @param <T>
      * @return
      */
@@ -77,6 +78,16 @@ public class GSONTOOLS {
             LogUtil.e("ERROR","gson map decode error");
         }
         return map ;
+    }
+
+    /**
+     * 简单的类型转化
+     * @param cls
+     * @return
+     */
+    public static Type getType(Class cls){
+
+       return  new TypeToken<ArrayList<School>>(){}.getType();
     }
 
 

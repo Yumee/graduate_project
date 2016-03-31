@@ -6,7 +6,7 @@ package neu.quwanme.CONFIG;
  */
 public class OfficalUrl {
 
-    public final static String baseUrl = "http://192.168.15.107:8081/quwanmeserver/";
+    public final static String baseUrl = "http://192.168.13.217:8081/quwanmeserver/";
 
     public final static String testUrl = "http://192.168.13.44:8081/quwanmeserver/userAction/androidQueryUser";
 
@@ -15,6 +15,8 @@ public class OfficalUrl {
     public final static String StudentResgistUrl = "userAction/androidCreateUser";
 
     public final static String ShopResgistUrl = "shopAction/androidCreateShop";
+
+    public final static String SchoolListUrl ="schoolAction/getAllSchools";
 
 
 }

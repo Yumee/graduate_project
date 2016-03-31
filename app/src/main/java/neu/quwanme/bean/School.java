@@ -96,4 +96,13 @@ public class School {
     public void setSchoolCity(String schoolCity) {
         this.schoolCity = schoolCity;
     }
+
+    @Override
+    public String toString() {
+        return "School{" +
+                "schoolId=" + schoolId +
+                ", schoolName='" + schoolName + '\'' +
+                ", schoolCity='" + schoolCity + '\'' +
+                '}';
+    }
 }

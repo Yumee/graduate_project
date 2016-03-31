@@ -2,17 +2,30 @@ package neu.quwanme.common;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,6 +33,7 @@ import butterknife.OnClick;
 import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
+import neu.quwanme.bean.School;
 import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
 import neu.quwanme.tools.GSONTOOLS;
@@ -30,7 +44,7 @@ import neu.quwanme.tools.UrlParseTool;
 /**
  * Created by Lonie233 on 2016/3/21.
  */
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity  {
 
     @Bind(R.id.rl_student)
     RelativeLayout rlStudent;
@@ -80,11 +94,16 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnShopRegi;
     @Bind(R.id.btn_shop_login)
     Button btnShopLogin;
+    @Bind(R.id.school_list)
+    Spinner schoolList;
 
 
 
     public boolean IsStudent = false;//true means user/ false means shop
     private String userSex = "";
+    private List<String> schoolName ;
+    private ArrayAdapter<String> arr_adapter;
+    private String mSchoolName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
             rlShopBtn.setVisibility(View.VISIBLE);
         }
 
-
+        getSchool();
     }
 
     @OnClick({R.id.user_sex_girl, R.id.user_sex_boy, R.id.btn_student_regi,
@@ -191,10 +210,15 @@ public class RegisterActivity extends AppCompatActivity {
         if (IsStudent) {
             url = OfficalUrl.StudentResgistUrl;
             params.put("userNumber", etNumber.getText().toString());
-            params.put("userRealName", etNumber.getText().toString());
-            params.put("userNickName", etNumber.getText().toString());
-            params.put("userPassword", etNumber.getText().toString());
-            params.put("userAge", etNumber.getText().toString());
+            params.put("userRealName", etUsername.getText().toString());
+            params.put("userNickName", etNickname.getText().toString());
+            params.put("userPassword", etPassword.getText().toString());
+            params.put("userAge", etAge.getText().toString());
+            try {
+                params.put("schoolName", URLEncoder.encode(schoolList.getSelectedItem().toString(),"utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             params.put("userSex", userSex);
 
         } else {
@@ -212,7 +236,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(int status, String result) {
                 if (status == NetWorker.HTTP_OK){
                     Map<String,Integer> map = GSONTOOLS.getMap(result,Map.class);
-                    // TODO: 2016/3/21 再重新请求用户信息放入本地，然后跳转到首页
+                    //  2016/3/21 再重新请求用户信息放入本地，然后跳转到首页
                     LogUtil.d("hzm"," 创建 用户返回值 "+map.get(Status_Code.Status_COde));
                 }
             }
@@ -220,5 +244,41 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 展示可选择的学校列表
+     */
+    public void getSchool(){
+        // TODO: 2016/3/29 获取全部的学校，以列表的形式展现出来
+        schoolName = new ArrayList<>();
+        for (int i=0;i<50;i++)
+            schoolName.add(" 东北大学"+i);
+
+        NetWorker.getInstance().get(UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.SchoolListUrl), new NetWorker.ICallback() {
+            @Override
+            public void onResponse(int status, String result) {
+                if (status == NetWorker.HTTP_OK){
+                    Type type = new TypeToken<ArrayList<School>>(){}.getType();
+                    List<School> schools = GSONTOOLS.getList(result,type);
+                    LogUtil.d("hzm","schools "+schools.toString());
+                    if (!schools.isEmpty()) {
+                        Iterator it = schools.iterator();
+                        schoolName.clear();
+                        while (it.hasNext()){
+                            schoolName.add(((School)it.next()).getSchoolName());
+                        }
+                    }else {
+                        Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        arr_adapter = new ArrayAdapter<>(this, R.layout.spinner_item, schoolName);
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        schoolList.setAdapter(arr_adapter);
+        schoolList.setPrompt("请选择您的学校");
+
+    }
 
 }
