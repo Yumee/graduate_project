@@ -2,7 +2,6 @@ package neu.quwanme.common;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -25,7 +24,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +32,6 @@ import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
 import neu.quwanme.bean.School;
-import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
@@ -237,7 +234,7 @@ public class RegisterActivity extends AppCompatActivity  {
                 if (status == NetWorker.HTTP_OK){
                     Map<String,Integer> map = GSONTOOLS.getMap(result,Map.class);
                     //  2016/3/21 再重新请求用户信息放入本地，然后跳转到首页
-                    LogUtil.d("hzm"," 创建 用户返回值 "+map.get(Status_Code.Status_COde));
+                    LogUtil.d("hzm"," 创建 用户返回值 "+map.get(Status_Code.Status_Code));
                 }
             }
         });

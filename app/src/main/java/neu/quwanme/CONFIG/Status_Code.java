@@ -9,7 +9,7 @@ public class Status_Code {
     /**
      * 返回的gson串中的key值
      */
-    public final static String Status_COde = "status_code";
+    public final static String Status_Code = "status_code";
 
     //	系统设定的一些状态量
     public final static int SYSTEM_SUCCESS_STATUS = 0 ;
