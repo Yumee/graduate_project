@@ -25,6 +25,8 @@ public class Status_Code {
     public final static int UPDATE_FAILED = 1 ;//更新失败
     public final static int INSERT_FAILED = 1;//插入失败
 
+    public final static int LOGIN_FAILED = 1;//登录失败，用户名密码错误
+
     //	object（数据表中不存在） 不存在,返回此值  或将此值设为id
     public static int OBJECT_NOT_EXIST = -1 ;
 

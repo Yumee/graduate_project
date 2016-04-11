@@ -16,13 +16,16 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 import neu.quwanme.CONFIG.OfficalUrl;
+import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
 import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
+import neu.quwanme.shop.ShopMainActivity;
 import neu.quwanme.student.StudentMainActivity;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
@@ -40,6 +43,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button btn_login,btn_regi,btnShopRegi;
     RadioButton chooseUser,chooseShop;
     private Context mContxt;
+
+    public Boolean getLogin() {
+        return IsLogin;
+    }
+
+    public void setLogin(Boolean login) {
+        IsLogin = login;
+    }
+
+    private Boolean IsLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +77,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_login = (Button) findViewById(R.id.btn_login);
         btn_regi = (Button) findViewById(R.id.btn_regi);
         btnShopRegi = (Button) findViewById(R.id.btn_shop_regi);
+        chooseUser = (RadioButton) findViewById(R.id.user_type_normal);
+        chooseShop = (RadioButton) findViewById(R.id.user_type_shop);
 
 //        设置监听器
         tv_forgetPwd.setOnClickListener(this);
@@ -95,13 +110,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-//                if (checked()) {
-                    if (loginProcess()){
-                        startActivity(new Intent(this, StudentMainActivity.class));
-//                    }
+                if (checked()) {
+                    loginProcess();
 
-                } else {
-                    et_pwd.setText("请重新输入密码");
                 }
                 break;
             case R.id.btn_regi:
@@ -109,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(this,RegisterActivity.class).putExtra("regi_usertype","student"));
                 break;
             case R.id.btn_shop_regi:
-                Toast.makeText(this,"点击了学生注册按钮",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"点击了商家注册按钮",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this,RegisterActivity.class).putExtra("regi_usertype","shop"));
                 break;
             case R.id.tv_forgetPwd:
@@ -117,24 +128,56 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-    public boolean loginProcess(){
-//        String username = et_username.getText().toString();
-//        String password = et_pwd.getText().toString();
-//
-//        Map<String,String > params = new HashMap<String, String>() ;
-//
-//        params.put("userId",username);
-//        params.put("userPassword",password);
-//
-//        String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl,OfficalUrl.UserLoginUrl);
-//        NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
-//            @Override
-//            public void onResponse(int status, String result) {
-//               Map<String,Integer> res = GSONTOOLS.getBean(result,Map.class);
-//                LogUtil.d("hzm", result+" "+res.toString());
-//            }
-//        });
-        return true ;
+    public void loginProcess(){
+        IsLogin = false;
+        String username = et_username.getText().toString();
+        String password = et_pwd.getText().toString();
+        String url ="";
+        Map<String,String > params = new HashMap<String, String>() ;
+        if (chooseUser.isChecked()) {
+            params.put("userId", username);
+            params.put("userPassword",password);
+            url=OfficalUrl.StudentLoginUrl;
+        }else {
+            params.put("shopId",username);
+            params.put("shopPassword",password);
+            url =OfficalUrl.ShopLoginUrl;
+        }
+
+        final String targetUrl = UrlParseTool.parseUrl(OfficalUrl.baseUrl,url);
+        try{
+            NetWorker.getInstance().get(UrlParseTool.parseParam(targetUrl, params), new NetWorker.ICallback() {
+                @Override
+                public void onResponse(int status, String result) {
+                    try {
+                        Type type = new TypeToken<Map<String, Object>>() {
+                        }.getType();
+                        Map<String, Object> res = GSONTOOLS.getMap(result, type);
+                        LogUtil.d("hzm", result + " " + res.toString());
+                        if (status == NetWorker.HTTP_OK) {
+                            double code = (double) res.get(Status_Code.Status_Code);
+                            if (code == Status_Code.SUCCESS_STATUS) {
+                                // TODO: 2016/4/11 用户信息存入sp，服务器返回用户信息+登录结果码 是否登录的状态存入sp
+                                    setLogin(true);
+                                    Toast.makeText(mContxt, "登陆成功", Toast.LENGTH_SHORT).show();
+                                    if (chooseUser.isChecked()) {
+                                        startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
+                                    }else {
+                                        startActivity(new Intent(LoginActivity.this, ShopMainActivity.class));
+                                    }
+                                } else {
+                                    et_pwd.setHint("请重新输入密码");
+                                    Toast.makeText(mContxt, "用户名/密码不正确", Toast.LENGTH_SHORT).show();
+                                }
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

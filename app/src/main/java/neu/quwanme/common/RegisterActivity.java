@@ -6,14 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -35,11 +31,9 @@ import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
 import neu.quwanme.bean.City;
 import neu.quwanme.bean.School;
-import neu.quwanme.bean.ShopActivity;
 import neu.quwanme.framwork.net.NetWorker;
 import neu.quwanme.shop.ShopMainActivity;
 import neu.quwanme.student.StudentMainActivity;
-import neu.quwanme.tools.CONFIG;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
 import neu.quwanme.tools.TOAST;
@@ -86,6 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public boolean IsStudent = false;//true means user/ false means shop
+    @Bind(R.id.et_shopPassword)
+    EditText etShopPassword;
     private String userSex = "";
     private List<String> schoolName;
     private List<String> cityname;
@@ -174,7 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean checked() {
         if (IsStudent) {
             //检测输入
-            if (schoolList.getSelectedItem().toString().equals("")||etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
+            if (schoolList.getSelectedItem().toString().equals("") || etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
                 return false;
             }
             //检测选择项
@@ -182,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             }
         } else {
-            if (cityList.getSelectedItem().toString().equals("") ||etShopname == null) {
+            if (cityList.getSelectedItem().toString().equals("") || etShopname == null) {
                 return false;
             }
         }
@@ -205,21 +201,22 @@ public class RegisterActivity extends AppCompatActivity {
         }
         params.put("userSex", userSex);
 
-        url = UrlParseTool.parseUrl(OfficalUrl.baseUrl,OfficalUrl.StudentResgistUrl);
+        url = UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.StudentResgistUrl);
 
         try {
             NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
                 @Override
                 public void onResponse(int status, String result) {
-                    if (status == NetWorker.HTTP_OK){
-                        Type type = new TypeToken<Map<String,Object>>(){}.getType();
-                        Map<String,Object> map = GSONTOOLS.getMap(result,type);
-                        LogUtil.d("hzm",map.get(Status_Code.Status_Code).toString());
+                    if (status == NetWorker.HTTP_OK) {
+                        Type type = new TypeToken<Map<String, Object>>() {
+                        }.getType();
+                        Map<String, Object> map = GSONTOOLS.getMap(result, type);
+                        LogUtil.d("hzm", map.get(Status_Code.Status_Code).toString());
                         startActivity(new Intent(RegisterActivity.this, StudentMainActivity.class));
                     }
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -250,7 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(RegisterActivity.this, "城市列表为空，请检查服务器数据库", Toast.LENGTH_SHORT).show();
                         }
-                    }else if (status == NetWorker.HTTP_500){
+                    } else if (status == NetWorker.HTTP_500) {
                         Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -270,20 +267,22 @@ public class RegisterActivity extends AppCompatActivity {
     public void registeShop() {
         Map<String, String> params = new HashMap<>();
 
-        try{
-            params.put("shopName",URLEncoder.encode(etShopname.getText().toString()));
-            params.put("cityName",URLEncoder.encode(cityList.getSelectedItem().toString()));
-            String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.ShopResgistUrl) ;
-            NetWorker.getInstance().get(UrlParseTool.parseParam(url,params), new NetWorker.ICallback() {
+        try {
+            params.put("shopName", URLEncoder.encode(etShopname.getText().toString()));
+            params.put("shopPassword", URLEncoder.encode(etShopPassword.getText().toString()));
+            params.put("cityName", URLEncoder.encode(cityList.getSelectedItem().toString()));
+            String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.ShopResgistUrl);
+            NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
                 @Override
                 public void onResponse(int status, String result) {
-                    if (status == NetWorker.HTTP_OK){
-                        Type type = new TypeToken<Map<String,Object>>(){}.getType();
-                        
-                        Map<String,Object> res = GSONTOOLS.getMap(result,type);
+                    if (status == NetWorker.HTTP_OK) {
+                        Type type = new TypeToken<Map<String, Object>>() {
+                        }.getType();
 
-                        LogUtil.d("hzm",res.get(Status_Code.Status_Code)+" "+Status_Code.SUCCESS_STATUS);
-                        if (((double)res.get(Status_Code.Status_Code)) == Status_Code.SUCCESS_STATUS){
+                        Map<String, Object> res = GSONTOOLS.getMap(result, type);
+
+                        LogUtil.d("hzm", res.get(Status_Code.Status_Code) + " " + Status_Code.SUCCESS_STATUS);
+                        if (((double) res.get(Status_Code.Status_Code)) == Status_Code.SUCCESS_STATUS) {
                             // TODO: 2016/4/8 注册成功，返回shopId，shop实例
                             // TODO: 2016/4/8 跳转商家首页
                             Toast.makeText(RegisterActivity.this, "商家注册成功", Toast.LENGTH_SHORT).show();
@@ -291,12 +290,12 @@ public class RegisterActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(RegisterActivity.this, "商家注册失败", Toast.LENGTH_SHORT).show();
                         }
-                        
-                        
+
+
                     }
                 }
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

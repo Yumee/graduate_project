@@ -193,7 +193,7 @@
         android:id="@+id/rl_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ly_shopname"
@@ -219,12 +219,36 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ly_shopPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ly_shopname"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:gravity="center_vertical"
+                android:id="@+id/shopPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商家密码  "
+                android:textSize="20sp"/>
+            <EditText
+                android:gravity="center_vertical"
+                android:id="@+id/et_shopPassword"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:hint="商家密码"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_marginTop="10dp"
             android:id="@+id/ly_shopcity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/ly_shopname">
+            android:layout_below="@+id/ly_shopPassword">
             <TextView
                 android:gravity="center_vertical"
                 android:id="@+id/shop_city"
