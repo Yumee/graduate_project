@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gray"
+    >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="start">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <!--头像-->
+            <ImageView
+                android:layout_marginLeft="18dp"
+                android:background="@color/gray"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="18dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/imageView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="店 名："
+                android:id="@+id/tv_name"
+                android:textColor="@color/black"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_toEndOf="@+id/imageView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="店 主："
+                android:id="@+id/tv_age"
+                android:textColor="@color/black"
+                android:layout_alignTop="@+id/tv_name"
+                android:layout_toRightOf="@+id/tv_name"
+                android:layout_toEndOf="@+id/tv_name"
+                android:layout_marginLeft="69dp"
+                android:layout_marginStart="69dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="类 型："
+                android:textColor="@color/black"
+                android:id="@+id/tv_favor"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginTop="20dp"
+                android:layout_alignLeft="@+id/tv_name"
+                android:layout_alignStart="@+id/tv_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="去玩么"
+                android:id="@+id/tv_shop_name"
+                android:layout_alignTop="@+id/tv_name"
+                android:layout_toRightOf="@+id/tv_name"
+                android:layout_toEndOf="@+id/tv_name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="黄晓明"
+                android:id="@+id/tv_shop_age"
+                android:textColor="@color/black"
+                android:layout_above="@+id/tv_favor"
+                android:layout_toRightOf="@+id/tv_age"
+                android:layout_toEndOf="@+id/tv_age" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="美食、电影、娱乐"
+                android:textColor="@color/black"
+                android:id="@+id/tv_shop_favor"
+                android:layout_alignBottom="@+id/tv_favor"
+                android:layout_alignLeft="@+id/tv_shop_name"
+                android:layout_alignStart="@+id/tv_shop_name" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--主要内容-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        >
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           >
+           <RelativeLayout
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:background="@color/blue_identity"
+               android:layout_height="180dp"
+               android:id="@+id/rl_last_aty">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="活动管理"/>
+           </RelativeLayout>
+           <RelativeLayout
+               android:layout_width="0dp"
+               android:layout_weight="1"
+               android:layout_height="180dp"
+               android:background="@color/blue_identity"
+               android:layout_marginLeft="5dp"
+               android:id="@+id/rl_my_aty"
+               >
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:text="订单管理"/>
+           </RelativeLayout>
+       </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            >
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/blue_identity"
+                android:layout_height="180dp"
+                android:id="@+id/rl_person_info">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="商家信息"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="180dp"
+                android:background="@color/blue_identity"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/rl_shop_rank_list"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="商家排名"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_above="@+id/tv_scorll_text"
+            android:background="@color/gray"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/tv_scorll_text"
+            android:text="滚动条"
+        />
+    </LinearLayout>
+
+</LinearLayout>

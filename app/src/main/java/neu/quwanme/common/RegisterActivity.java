@@ -1,5 +1,6 @@
 package neu.quwanme.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,8 +33,13 @@ import butterknife.OnClick;
 import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.R;
+import neu.quwanme.bean.City;
 import neu.quwanme.bean.School;
+import neu.quwanme.bean.ShopActivity;
 import neu.quwanme.framwork.net.NetWorker;
+import neu.quwanme.shop.ShopMainActivity;
+import neu.quwanme.student.StudentMainActivity;
+import neu.quwanme.tools.CONFIG;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
 import neu.quwanme.tools.TOAST;
@@ -41,7 +48,7 @@ import neu.quwanme.tools.UrlParseTool;
 /**
  * Created by Lonie233 on 2016/3/21.
  */
-public class RegisterActivity extends AppCompatActivity  {
+public class RegisterActivity extends AppCompatActivity {
 
     @Bind(R.id.rl_student)
     RelativeLayout rlStudent;
@@ -51,56 +58,38 @@ public class RegisterActivity extends AppCompatActivity  {
     RelativeLayout rlStudentBtn;
     @Bind(R.id.rl_shop_btn)
     RelativeLayout rlShopBtn;
-    @Bind(R.id.user_name)
-    TextView userName;
+
     @Bind(R.id.et_username)
     EditText etUsername;
-    @Bind(R.id.password)
-    TextView password;
     @Bind(R.id.et_password)
     EditText etPassword;
     @Bind(R.id.et_nickname)
     EditText etNickname;
     @Bind(R.id.et_number)
     EditText etNumber;
-    @Bind(R.id.age)
-    TextView age;
     @Bind(R.id.et_age)
     EditText etAge;
     @Bind(R.id.user_sex_girl)
     RadioButton userSexGirl;
     @Bind(R.id.user_sex_boy)
     RadioButton userSexBoy;
-    @Bind(R.id.ly_number)
-    LinearLayout lyNumber;
-    @Bind(R.id.ly_age)
-    LinearLayout lyAge;
-    @Bind(R.id.shop_name)
-    TextView shopName;
+
+
     @Bind(R.id.et_shopname)
     EditText etShopname;
-    @Bind(R.id.shop_city)
-    TextView shopCity;
-    @Bind(R.id.et_shopcity)
-    EditText etShopcity;
-    @Bind(R.id.btn_student_regi)
-    Button btnStudentRegi;
-    @Bind(R.id.btn_student_login)
-    Button btnStudentLogin;
-    @Bind(R.id.btn_shop_regi)
-    Button btnShopRegi;
-    @Bind(R.id.btn_shop_login)
-    Button btnShopLogin;
+
+
     @Bind(R.id.school_list)
     Spinner schoolList;
-
+    @Bind(R.id.city_list)
+    Spinner cityList;
 
 
     public boolean IsStudent = false;//true means user/ false means shop
     private String userSex = "";
-    private List<String> schoolName ;
+    private List<String> schoolName;
+    private List<String> cityname;
     private ArrayAdapter<String> arr_adapter;
-    private String mSchoolName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,18 +112,19 @@ public class RegisterActivity extends AppCompatActivity  {
             rlShopBtn.setVisibility(View.GONE);
             rlStudent.setVisibility(View.VISIBLE);
             rlStudentBtn.setVisibility(View.VISIBLE);
+            getSchool();
         } else {
             rlStudent.setVisibility(View.GONE);
             rlStudentBtn.setVisibility(View.GONE);
             rlShop.setVisibility(View.VISIBLE);
             rlShopBtn.setVisibility(View.VISIBLE);
+            getAllCity();
         }
 
-        getSchool();
     }
 
     @OnClick({R.id.user_sex_girl, R.id.user_sex_boy, R.id.btn_student_regi,
-                R.id.btn_student_login, R.id.btn_shop_regi, R.id.btn_shop_login})
+            R.id.btn_student_login, R.id.btn_shop_regi, R.id.btn_shop_login})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.user_sex_girl:
@@ -158,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity  {
                 if (checked()) {
                     registeUser();
                 } else {
-                    LogUtil.d("hzm","用户信息不完整");
+                    LogUtil.d("hzm", "用户信息不完整");
                     TOAST.ToastShort(this, "用户信息不完整!");
                 }
                 break;
@@ -166,7 +156,7 @@ public class RegisterActivity extends AppCompatActivity  {
                 break;
             case R.id.btn_shop_regi:
                 if (checked()) {
-                    registeUser();
+                    registeShop();
                 } else {
                     TOAST.ToastShort(this, "商家信息不完整!");
                 }
@@ -184,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity  {
     public boolean checked() {
         if (IsStudent) {
             //检测输入
-            if (etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
+            if (schoolList.getSelectedItem().toString().equals("")||etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
                 return false;
             }
             //检测选择项
@@ -192,89 +182,154 @@ public class RegisterActivity extends AppCompatActivity  {
                 return false;
             }
         } else {
-            if (etShopcity == null || etShopname == null){
+            if (cityList.getSelectedItem().toString().equals("") ||etShopname == null) {
                 return false;
             }
         }
-            return true;
+        return true;
     }
 
     public void registeUser() {
         String url = "";
 
         Map<String, String> params = new HashMap<>();
-        params.clear();
-        if (IsStudent) {
-            url = OfficalUrl.StudentResgistUrl;
-            params.put("userNumber", etNumber.getText().toString());
-            params.put("userRealName", etUsername.getText().toString());
-            params.put("userNickName", etNickname.getText().toString());
-            params.put("userPassword", etPassword.getText().toString());
-            params.put("userAge", etAge.getText().toString());
-            try {
-                params.put("schoolName", URLEncoder.encode(schoolList.getSelectedItem().toString(),"utf-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            params.put("userSex", userSex);
-
-        } else {
-            url = OfficalUrl.ShopResgistUrl;
-
-            params.put("shopName", etShopname.getText().toString());
-            params.put("shopCity", etShopcity.getText().toString());
-//            params.put("shopName", "");
-
+        params.put("userNumber", etNumber.getText().toString());
+        params.put("userPassword", etPassword.getText().toString());
+        params.put("userAge", etAge.getText().toString());
+        try {
+            params.put("userRealName", URLEncoder.encode(etUsername.getText().toString()));
+            params.put("userNickName", URLEncoder.encode(etNickname.getText().toString()));
+            params.put("schoolName", URLEncoder.encode(schoolList.getSelectedItem().toString(), "utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        url = UrlParseTool.parseUrl(OfficalUrl.baseUrl, url);
+        params.put("userSex", userSex);
 
-        NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
-            @Override
-            public void onResponse(int status, String result) {
-                if (status == NetWorker.HTTP_OK){
-                    Map<String,Integer> map = GSONTOOLS.getMap(result,Map.class);
-                    //  2016/3/21 再重新请求用户信息放入本地，然后跳转到首页
-                    LogUtil.d("hzm"," 创建 用户返回值 "+map.get(Status_Code.Status_Code));
+        url = UrlParseTool.parseUrl(OfficalUrl.baseUrl,OfficalUrl.StudentResgistUrl);
+
+        try {
+            NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
+                @Override
+                public void onResponse(int status, String result) {
+                    if (status == NetWorker.HTTP_OK){
+                        Type type = new TypeToken<Map<String,Object>>(){}.getType();
+                        Map<String,Object> map = GSONTOOLS.getMap(result,type);
+                        LogUtil.d("hzm",map.get(Status_Code.Status_Code).toString());
+                        startActivity(new Intent(RegisterActivity.this, StudentMainActivity.class));
+                    }
                 }
-            }
-        });
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
     /**
      * 展示可选择的学校列表
      */
-    public void getSchool(){
+    public void getSchool() {
         // TODO: 2016/3/29 获取全部的学校，以列表的形式展现出来
         schoolName = new ArrayList<>();
-        for (int i=0;i<50;i++)
-            schoolName.add(" 东北大学"+i);
-
-        NetWorker.getInstance().get(UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.SchoolListUrl), new NetWorker.ICallback() {
-            @Override
-            public void onResponse(int status, String result) {
-                if (status == NetWorker.HTTP_OK){
-                    Type type = new TypeToken<ArrayList<School>>(){}.getType();
-                    List<School> schools = GSONTOOLS.getList(result,type);
-                    LogUtil.d("hzm","schools "+schools.toString());
-                    if (!schools.isEmpty()) {
-                        Iterator it = schools.iterator();
-                        schoolName.clear();
-                        while (it.hasNext()){
-                            schoolName.add(((School)it.next()).getSchoolName());
+        schoolName.add("请选择学校");
+        try {
+            NetWorker.getInstance().get(UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.SchoolListUrl), new NetWorker.ICallback() {
+                @Override
+                public void onResponse(int status, String result) {
+                    if (status == NetWorker.HTTP_OK) {
+                        Type type = new TypeToken<ArrayList<School>>() {
+                        }.getType();
+                        List<School> schools = GSONTOOLS.getList(result, type);
+                        LogUtil.d("hzm", "schools " + schools.toString());
+                        if (!schools.isEmpty()) {
+                            Iterator it = schools.iterator();
+                            schoolName.clear();
+                            while (it.hasNext()) {
+                                schoolName.add(((School) it.next()).getSchoolName());
+                            }
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "城市列表为空，请检查服务器数据库", Toast.LENGTH_SHORT).show();
                         }
-                    }else {
-                        Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    }else if (status == NetWorker.HTTP_500){
+                        Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
-        });
+            });
+        } catch (Exception e) {
+            Toast.makeText(RegisterActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+        }
 
         arr_adapter = new ArrayAdapter<>(this, R.layout.spinner_item, schoolName);
         arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         schoolList.setAdapter(arr_adapter);
         schoolList.setPrompt("请选择您的学校");
+
+    }
+
+    public void registeShop() {
+        Map<String, String> params = new HashMap<>();
+
+        try{
+            params.put("shopName",URLEncoder.encode(etShopname.getText().toString()));
+            params.put("cityName",URLEncoder.encode(cityList.getSelectedItem().toString()));
+            String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.ShopResgistUrl) ;
+            NetWorker.getInstance().get(UrlParseTool.parseParam(url,params), new NetWorker.ICallback() {
+                @Override
+                public void onResponse(int status, String result) {
+                    if (status == NetWorker.HTTP_OK){
+                        Type type = new TypeToken<Map<String,Object>>(){}.getType();
+                        
+                        Map<String,Object> res = GSONTOOLS.getMap(result,type);
+
+                        LogUtil.d("hzm",res.get(Status_Code.Status_Code)+" "+Status_Code.SUCCESS_STATUS);
+                        if (((double)res.get(Status_Code.Status_Code)) == Status_Code.SUCCESS_STATUS){
+                            // TODO: 2016/4/8 注册成功，返回shopId，shop实例
+                            // TODO: 2016/4/8 跳转商家首页
+                            Toast.makeText(RegisterActivity.this, "商家注册成功", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, ShopMainActivity.class));
+                        } else {
+                            Toast.makeText(RegisterActivity.this, "商家注册失败", Toast.LENGTH_SHORT).show();
+                        }
+                        
+                        
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getAllCity() {
+        cityname = new ArrayList<>();
+        cityname.add("请选择城市");
+        try {
+
+            NetWorker.getInstance().get(UrlParseTool.parseUrl(OfficalUrl.baseUrl, OfficalUrl.CityListUrl), new NetWorker.ICallback() {
+                @Override
+                public void onResponse(int status, String result) {
+                    if (status == NetWorker.HTTP_OK) {
+                        Type type = new TypeToken<ArrayList<City>>() {
+                        }.getType();
+
+                        List<City> cityList = GSONTOOLS.getList(result, type);
+
+                        for (City c : cityList) {
+                            cityname.add(c.getCityName());
+                        }
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        arr_adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, cityname);
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cityList.setAdapter(arr_adapter);
+        cityList.setPrompt("请选择城市");
 
     }
 

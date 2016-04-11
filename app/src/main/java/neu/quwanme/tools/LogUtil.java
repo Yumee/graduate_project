@@ -15,5 +15,8 @@ public class LogUtil {
     public static void e(String tag,@NonNull String message) {
         Log.d(tag,message);
     }
+    public static void w(Exception e,String msg){
+        Log.w("hzm",msg+e.toString());
+    }
 
 }

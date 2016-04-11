@@ -31,6 +31,21 @@
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme"
             />
+        <activity
+            android:name=".student.StudentMainActivity"
+            android:label="学生主界面"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".student.LastestAty"
+            android:label="最新活动"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".shop.ShopMainActivity"
+            android:label="商家主界面"
+            android:theme="@style/AppTheme"
+            />
 
     </application>
 

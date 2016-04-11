@@ -13,6 +13,11 @@ import neu.quwanme.tools.LogUtil;
  */
 public class NetWorker {
     public static final int HTTP_OK = 200 ;
+    public static final int HTTP_404 = 404 ;
+    public static final int HTTP_500 = 500 ;
+    public static final int NATIVE_ERROR = 600;
+    public static final int UNKNOWN_HOST = 601;
+    public static final int SOCKET_TIMEOUT = 602;
 
     public static  NetWorker instance = new NetWorker();
     public static NetWorkerVolleyImpl netWorkerVolleyImpl = new NetWorkerVolleyImpl();

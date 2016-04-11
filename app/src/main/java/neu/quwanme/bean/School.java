@@ -97,12 +97,10 @@ public class School {
         this.schoolCity = schoolCity;
     }
 
-    @Override
-    public String toString() {
-        return "School{" +
-                "schoolId=" + schoolId +
-                ", schoolName='" + schoolName + '\'' +
-                ", schoolCity='" + schoolCity + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "School [schoolId=" + schoolId + ", schoolName=" + schoolName + ", schoolCity=" + schoolCity + "]";
+	}
+    
+    
 }

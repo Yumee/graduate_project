@@ -2,6 +2,7 @@ package neu.quwanme;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 
 import neu.quwanme.tools.LogUtil;
 
@@ -11,11 +12,13 @@ import neu.quwanme.tools.LogUtil;
 public class WanApplication extends Application{
 
     private static Context mcontext;
+    protected static Application instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
         WanApplication.mcontext = getApplicationContext();
+        this.instance = this ;
     }
     public static Context getAppContext() {
         if (mcontext == null) {
@@ -24,4 +27,18 @@ public class WanApplication extends Application{
         }
             return WanApplication.mcontext ;
     }
+    public static Application getInstance(){
+        return instance;
+    }
+    public int getVersionCode() {
+        try {
+            return getPackageManager().getPackageInfo(getTruePackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            return -1;
+        }
+    }
+    public String getTruePackageName() {
+        return super.getPackageName();
+    }
+
 }

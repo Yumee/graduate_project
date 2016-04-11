@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <item name="transparent" type="drawable">#00000000</item>
+    <item name="transparent_background" type="drawable">#99000000</item>
+    <item name="item_list_white" type="drawable">#ffffff</item>
+    <item name="item_list_gray" type="drawable">#f6f6f6</item>
+
+    <item name="item_light_red" type="drawable">#ff6845</item>
+    <item name="item_gray" type="drawable">#666666</item>
+
+    <item name="gray_translucent_background" type="drawable">#55000000</item>
+</resources>

@@ -225,16 +225,12 @@ public class User {
         this.userSex = userSex;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userNumber=" + userNumber +
-                ", userRealName='" + userRealName + '\'' +
-                ", userNickName='" + userNickName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", userAge=" + userAge +
-                ", userSex='" + userSex + '\'' +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userNumber=" + userNumber + ", userRealName=" + userRealName
+				+ ", userNickName=" + userNickName + ", userPassword=" + userPassword + ", userAge=" + userAge
+				+ ", userSex=" + userSex + "]";
+	}
+    
+    
 }

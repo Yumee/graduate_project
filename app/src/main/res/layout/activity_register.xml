@@ -131,7 +131,7 @@
             <Spinner
                 android:layout_marginTop="2dp"
                 android:layout_width="150dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
                 android:id="@+id/school_list">
@@ -201,12 +201,14 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true">
             <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="商家名称  "
                 android:textSize="20sp"/>
             <EditText
+                android:gravity="center_vertical"
                 android:id="@+id/et_shopname"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -217,33 +219,35 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:id="@+id/ly_shopcity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/ly_shopname">
             <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/shop_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="所在城市  "
                 android:textSize="20sp"/>
-            <EditText
-                android:id="@+id/et_shopcity"
+
+            <Spinner
+                android:layout_marginTop="2dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:hint="所在城市"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:inputType="text"
-                android:imeActionLabel="完成"
-                android:imeOptions="actionDone"
-                android:singleLine="true"/>
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:id="@+id/city_list">
+
+            </Spinner>
         </LinearLayout>
 
 
     </RelativeLayout>
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/rl_studentbtn"
         android:layout_below="@+id/rl_student"
         android:layout_width="match_parent"
@@ -273,6 +277,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/rl_shop_btn"
         android:layout_below="@+id/rl_shop"
         android:layout_width="match_parent"

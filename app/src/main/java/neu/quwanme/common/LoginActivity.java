@@ -23,6 +23,7 @@ import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.R;
 import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
+import neu.quwanme.student.StudentMainActivity;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
 import neu.quwanme.tools.TOAST;
@@ -94,8 +95,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_login:
-                if (checked()) {
-                    loginProcess();
+//                if (checked()) {
+                    if (loginProcess()){
+                        startActivity(new Intent(this, StudentMainActivity.class));
+//                    }
+
                 } else {
                     et_pwd.setText("请重新输入密码");
                 }
@@ -114,22 +118,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     public boolean loginProcess(){
-        String username = et_username.getText().toString();
-        String password = et_pwd.getText().toString();
-
-        Map<String,String > params = new HashMap<String, String>() ;
-
-        params.put("userId",username);
-        params.put("userPassword",password);
-
-        String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl,OfficalUrl.UserLoginUrl);
-        NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
-            @Override
-            public void onResponse(int status, String result) {
-               Map<String,Integer> res = GSONTOOLS.getBean(result,Map.class);
-                LogUtil.d("hzm", result+" "+res.toString());
-            }
-        });
+//        String username = et_username.getText().toString();
+//        String password = et_pwd.getText().toString();
+//
+//        Map<String,String > params = new HashMap<String, String>() ;
+//
+//        params.put("userId",username);
+//        params.put("userPassword",password);
+//
+//        String url = UrlParseTool.parseUrl(OfficalUrl.baseUrl,OfficalUrl.UserLoginUrl);
+//        NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
+//            @Override
+//            public void onResponse(int status, String result) {
+//               Map<String,Integer> res = GSONTOOLS.getBean(result,Map.class);
+//                LogUtil.d("hzm", result+" "+res.toString());
+//            }
+//        });
         return true ;
     }
 
