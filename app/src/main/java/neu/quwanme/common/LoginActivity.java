@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.gson.internal.StringMap;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -164,12 +165,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     setLogin(true);
                                     Toast.makeText(mContxt, "登陆成功", Toast.LENGTH_SHORT).show();
                                     if (chooseUser.isChecked()) {
-                                        LogUtil.d("hzm","sp "+(res.get("shop")).toString());
-                                        PreferencesUtils.putString(Symbols.shopId,((Shop)res.get(Symbols.shop)).getShopId()+"");
+                                        Object obj= res.get(Symbols.user);
+                                        LogUtil.d("hzm","sp "+((StringMap)obj).get(Symbols.userId));
+                                        PreferencesUtils.putString(Symbols.userId,((StringMap)obj).get(Symbols.userId)+"");
                                         startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
                                     }else {
-                                        LogUtil.d("hzm","sp "+(res.get("user")).toString());
-                                        PreferencesUtils.putString(Symbols.userId,((User)res.get(Symbols.user)).getUserId()+"");
+                                        PreferencesUtils.putString(Symbols.shopId,((StringMap)res.get(Symbols.shop)).get(Symbols.userId)+"");
                                         startActivity(new Intent(LoginActivity.this, ShopMainActivity.class));
                                     }
                                 } else {

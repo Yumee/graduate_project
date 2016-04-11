@@ -14,6 +14,30 @@ csdn blog ：http://blog.csdn.net/gstormspire/article/details/7638638
 
 *******************2016-3-19 13:07:21 胡泽明 ******************************
 
+*******************2016年4月11日16:17:14 胡泽明 ******************************
+
+    再次遇到泛型解析错误
+        json
+        {
+            "status_code":0,
+            "shop":
+                {
+                    "shopId":39,
+                    "shopName":"不可思议",
+                    "shopCity":"沈阳",
+                    "shopType":"1",
+                    "shopPassword":"123"
+                }
+        }
+
+    (Shop)map.get("shop")
+
+    无法进行强制类型转换
+    java.lang.ClassCastException: com.google.gson.internal.StringMap cannot be cast to **** （自定义的实体类）
+
+    屈服了，采用stringmap类获取想要的属性，然后进行使用 详见 loginactivity line 170/173
+
+*******************2016年4月11日16:17:14 胡泽明 ******************************
 
 
 
