@@ -129,10 +129,13 @@ public class Shop {
         this.shopType = shopType;
     }
 
-	@Override
-	public String toString() {
-		return "Shop [shopId=" + shopId + ", shopName=" + shopName + ", shopCity=" + shopCity + ", shopType=" + shopType
-				+ "]";
-	}
-    
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "shopId=" + shopId +
+                ", shopName='" + shopName + '\'' +
+                ", shopCity='" + shopCity + '\'' +
+                ", shopType='" + shopType + '\'' +
+                '}';
+    }
 }

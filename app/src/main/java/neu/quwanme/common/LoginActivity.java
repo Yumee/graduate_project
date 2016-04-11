@@ -22,13 +22,16 @@ import java.util.Map;
 
 import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.CONFIG.Status_Code;
+import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
+import neu.quwanme.bean.Shop;
 import neu.quwanme.bean.User;
 import neu.quwanme.framwork.net.NetWorker;
 import neu.quwanme.shop.ShopMainActivity;
 import neu.quwanme.student.StudentMainActivity;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
+import neu.quwanme.tools.PreferencesUtils;
 import neu.quwanme.tools.TOAST;
 import neu.quwanme.tools.UrlParseTool;
 
@@ -153,16 +156,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Type type = new TypeToken<Map<String, Object>>() {
                         }.getType();
                         Map<String, Object> res = GSONTOOLS.getMap(result, type);
-                        LogUtil.d("hzm", result + " " + res.toString());
+                        LogUtil.d("hzm", "result "+result + " " + res.toString());
                         if (status == NetWorker.HTTP_OK) {
                             double code = (double) res.get(Status_Code.Status_Code);
                             if (code == Status_Code.SUCCESS_STATUS) {
-                                // TODO: 2016/4/11 用户信息存入sp，服务器返回用户信息+登录结果码 是否登录的状态存入sp
+                                // : 2016/4/11 用户信息存入sp，服务器返回用户信息+登录结果码 是否登录的状态存入sp
                                     setLogin(true);
                                     Toast.makeText(mContxt, "登陆成功", Toast.LENGTH_SHORT).show();
                                     if (chooseUser.isChecked()) {
+                                        LogUtil.d("hzm","sp "+(res.get("shop")).toString());
+                                        PreferencesUtils.putString(Symbols.shopId,((Shop)res.get(Symbols.shop)).getShopId()+"");
                                         startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
                                     }else {
+                                        LogUtil.d("hzm","sp "+(res.get("user")).toString());
+                                        PreferencesUtils.putString(Symbols.userId,((User)res.get(Symbols.user)).getUserId()+"");
                                         startActivity(new Intent(LoginActivity.this, ShopMainActivity.class));
                                     }
                                 } else {
