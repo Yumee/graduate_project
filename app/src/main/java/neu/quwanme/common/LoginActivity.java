@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
     public void loginProcess(){
         IsLogin = false;
-        String username = et_username.getText().toString();
+        final String username = et_username.getText().toString();
         String password = et_pwd.getText().toString();
         String url ="";
         Map<String,String > params = new HashMap<String, String>() ;
@@ -167,10 +167,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     if (chooseUser.isChecked()) {
                                         Object obj= res.get(Symbols.user);
                                         LogUtil.d("hzm","sp "+((StringMap)obj).get(Symbols.userId));
-                                        PreferencesUtils.putString(Symbols.userId,((StringMap)obj).get(Symbols.userId)+"");
+                                        PreferencesUtils.putString(Symbols.userId,username);
+                                        PreferencesUtils.putString(Symbols.userNickName,((StringMap)obj).get(Symbols.userNickName)+"");
+                                        PreferencesUtils.putString(Symbols.userRealName,((StringMap)obj).get(Symbols.userRealName)+"");
+                                        PreferencesUtils.putString(Symbols.userAge,((StringMap)obj).get(Symbols.userAge)+"");
+                                        PreferencesUtils.putString(Symbols.userNumber,((StringMap)obj).get(Symbols.userNumber)+"");
+                                        PreferencesUtils.putString(Symbols.userPassword,((StringMap)obj).get(Symbols.userPassword)+"");
+                                        PreferencesUtils.putString(Symbols.userSex,((StringMap)obj).get(Symbols.userSex)+"");
                                         startActivity(new Intent(LoginActivity.this, StudentMainActivity.class));
                                     }else {
-                                        PreferencesUtils.putString(Symbols.shopId,((StringMap)res.get(Symbols.shop)).get(Symbols.userId)+"");
+                                        Object obj= res.get(Symbols.shop);
+                                        PreferencesUtils.putString(Symbols.shopId,username);
+                                        PreferencesUtils.putString(Symbols.shopName,((StringMap)obj).get(Symbols.shopName)+"");
+                                        PreferencesUtils.putString(Symbols.shopCity,((StringMap)obj).get(Symbols.shopCity)+"");
+                                        PreferencesUtils.putString(Symbols.shopPassword,((StringMap)obj).get(Symbols.shopPassword)+"");
+                                        PreferencesUtils.putString(Symbols.shopType,((StringMap)obj).get(Symbols.shopType)+"");
                                         startActivity(new Intent(LoginActivity.this, ShopMainActivity.class));
                                     }
                                 } else {

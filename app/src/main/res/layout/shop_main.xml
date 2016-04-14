@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="类 型："
+                android:text="城 市："
                 android:textColor="@color/black"
                 android:id="@+id/tv_favor"
                 android:layout_below="@+id/tv_name"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="黄晓明"
-                android:id="@+id/tv_shop_age"
+                android:id="@+id/tv_shop_owner"
                 android:textColor="@color/black"
                 android:layout_above="@+id/tv_favor"
                 android:layout_toRightOf="@+id/tv_age"
@@ -86,12 +86,32 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="美食、电影、娱乐"
+                android:text="宇宙中心"
                 android:textColor="@color/black"
                 android:id="@+id/tv_shop_favor"
                 android:layout_alignBottom="@+id/tv_favor"
                 android:layout_alignLeft="@+id/tv_shop_name"
                 android:layout_alignStart="@+id/tv_shop_name" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="等 级："
+                android:textColor="@color/black"
+                android:id="@+id/tv_rank"
+                android:layout_alignTop="@+id/tv_shop_favor"
+                android:layout_alignLeft="@+id/tv_age"
+                android:layout_alignStart="@+id/tv_age" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="几星"
+                android:textColor="@color/black"
+                android:id="@+id/tv_shop_rank"
+                android:layout_alignTop="@+id/tv_rank"
+                android:layout_alignLeft="@+id/tv_shop_owner"
+                android:layout_alignStart="@+id/tv_shop_owner" />
+
 
         </RelativeLayout>
     </RelativeLayout>
@@ -116,7 +136,7 @@
                android:layout_weight="1"
                android:background="@color/blue_identity"
                android:layout_height="180dp"
-               android:id="@+id/rl_last_aty">
+               android:id="@+id/rl_manage_aty">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -193,7 +193,7 @@
         android:id="@+id/rl_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/ly_shopname"

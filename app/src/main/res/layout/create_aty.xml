@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+        <!--创建活动布局-->
+        <LinearLayout
+            android:id="@+id/rl_aty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:id="@+id/ly_atyname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/aty_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="活动名称"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/et_atyname"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入活动名称"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/ly_atycitylist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="所在城市"
+                    android:textSize="20sp"/>
+
+                <Spinner
+                    android:layout_marginTop="2dp"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/city_list">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_atyAddr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                >
+                <TextView
+                    android:id="@+id/atyAddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="活动地址"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/et_atyAddr"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入活动地址"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:singleLine="true"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/ly_atytypelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:gravity="center_vertical"
+                    android:id="@+id/shop_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="活动类型"
+                    android:textSize="20sp"/>
+
+                <Spinner
+                    android:layout_marginTop="2dp"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/type_list">
+
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_atyMaxPopu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="最大人数"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/et_atyMaxPopu"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="请输入最大人数"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:singleLine="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_atyMinPopu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="最少人数"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/et_atyMinPopu"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入最少人数"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:singleLine="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="开始时间"
+                    android:textSize="20sp"/>
+                <EditText
+                    android:id="@+id/et_starttime"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="datetime"
+                    android:hint="请输入开始时间"
+                    android:textSize="16sp"
+                    android:textAlignment="center"
+                    android:singleLine="true"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ly_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="结束时间"
+                    android:textSize="20sp"/>
+
+                <EditText
+                android:id="@+id/et_endtime"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:hint="请输入结束时间"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:inputType="datetime"
+                android:imeActionLabel="完成"
+                android:imeOptions="actionNone"
+                android:singleLine="true"
+                />
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:id="@+id/ly_shop_loginbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true">
+
+                <Button
+                    android:id="@+id/btn_create_aty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="创建活动"/>
+                <!--<Button-->
+                    <!--android:layout_marginLeft="45dp"-->
+                    <!--android:id="@+id/btn_shop_login"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:hint="想起密码去登陆"-->
+                    <!--/>-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+</RelativeLayout>
+

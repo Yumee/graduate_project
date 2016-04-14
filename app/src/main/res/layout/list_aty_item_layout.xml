@@ -11,7 +11,6 @@
         android:background="@color/gray"/>
     <!--活动item布局-->
     <RelativeLayout
-        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -30,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="title"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:id="@+id/aty_item_title"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
@@ -41,14 +40,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
             android:text="content"
             android:textSize="15sp"
             android:id="@+id/aty_item_content"
             android:layout_below="@+id/aty_item_title"
             android:layout_alignLeft="@+id/aty_item_title"
-            android:layout_alignStart="@+id/aty_item_title" />
+            android:layout_alignStart="@+id/aty_item_title"
+            android:layout_toRightOf="@+id/aty_item_img_right_arrow"
+            />
 
         <ImageView
+            android:id="@+id/aty_item_img_right_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/aty_item_arrow_right"

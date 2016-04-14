@@ -46,6 +46,21 @@
             android:label="商家主界面"
             android:theme="@style/AppTheme"
             />
+        <activity
+            android:name=".shop.ActivityMain"
+            android:label="商家活动管理界面"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".shop.CreateAty"
+            android:label="商家创建活动"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".shop.OneAtyDetail"
+            android:label="活动详情页"
+            android:theme="@style/AppTheme"
+            />
 
     </application>
 

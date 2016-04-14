@@ -23,4 +23,25 @@ public class OfficalUrl {
     public final static String CityListUrl ="shopAction/getAllCity";
 
 
+    /*****************************************activity related url*****************************************************/
+    public final static String AtyBaseUrl = "activityAction/" ;
+    public final static String TypeListUrl ="getAllType";
+
+    public final static String CreateAtyUrl = "androidCreateActivity";
+
+    public final static String GetLastestActivity = "getLastestActivity";
+
+    public final static String GetAllActivity = "getAllAty";
+
+    public final static String GetOrganizingActivity = "getAtyNotReady";
+
+    public final static String GetgetOrganizedOverActivity = "getAtyReady";
+
+    public final static String GetFinishActivity = "getAtyFinsh";
+
+
+
+    /*****************************************activity related url*****************************************************/
+
+
 }

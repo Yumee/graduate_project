@@ -170,7 +170,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean checked() {
         if (IsStudent) {
             //检测输入
-            if (schoolList.getSelectedItem().toString().equals("") || etUsername.getText() == null || etPassword == null || etNickname == null || etNumber == null || etAge == null) {
+            if (schoolList.getSelectedItem().toString().equals("请选择学校") || etUsername.getText() .equals("") || etPassword.equals("")|| etNickname.equals("") || etNumber.equals("") || etAge.equals("")) {
                 return false;
             }
             //检测选择项
@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
                 return false;
             }
         } else {
-            if (cityList.getSelectedItem().toString().equals("") || etShopname == null) {
+            if (cityList.getSelectedItem().toString().equals("请选择城市") || etShopname.getText().equals("")||etShopPassword.getText().equals("")) {
                 return false;
             }
         }
