@@ -23,7 +23,7 @@ public class Status_Code {
     public final static int NOT_EXIST_STATUS = 1 ;//对象不存在 删除，更新，查找
     public final static int EXCEPTION_STATUS = 2 ;//操作异常
     public final static int UPDATE_FAILED = 1 ;//更新失败
-    public final static int INSERT_FAILED = 1;//插入失败
+    public final static int FAILED = 1;//插入失败,更新失败，删除失败，通用的操作失败状态码
 
     public final static int LOGIN_FAILED = 1;//登录失败，用户名密码错误
 

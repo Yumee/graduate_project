@@ -189,13 +189,13 @@
             >
 
             <Button
-                android:id="@+id/btn_create_aty"
+                android:id="@+id/btn_update_aty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="确认修改"/>
             <Button
             android:layout_marginLeft="45dp"
-            android:id="@+id/btn_shop_login"
+            android:id="@+id/btn_delete_aty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="删除该活动"

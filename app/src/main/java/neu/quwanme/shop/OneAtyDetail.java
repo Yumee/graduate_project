@@ -12,16 +12,30 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import neu.quwanme.CONFIG.OfficalUrl;
+import neu.quwanme.CONFIG.Status_Code;
 import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
 import neu.quwanme.bean.Activity;
+import neu.quwanme.framwork.net.NetWorker;
+import neu.quwanme.tools.DateTimePickDialogUtil;
 import neu.quwanme.tools.DateTools;
+import neu.quwanme.tools.GSONTOOLS;
+import neu.quwanme.tools.PreferencesUtils;
+import neu.quwanme.tools.UrlParseTool;
 
 /**
  * Created by Lonie233 on 2016/4/14.
@@ -42,10 +56,6 @@ public class OneAtyDetail extends AppCompatActivity {
     EditText etStarttime;
     @Bind(R.id.et_endtime)
     EditText etEndtime;
-    @Bind(R.id.btn_create_aty)
-    Button btnCreateAty;
-    @Bind(R.id.btn_shop_login)
-    Button btnShopLogin;
     @Bind(R.id.status_list)
     Spinner statusList;
     private Activity mActivity;
@@ -77,6 +87,21 @@ public class OneAtyDetail extends AppCompatActivity {
         etAtyMinPopu.setText(mActivity.getActiviityMinPopu()+"");
         etStarttime.setText(DateTools.parseDate(mActivity.getActivityStartTime()));
         etEndtime.setText(DateTools.parseDate(mActivity.getActivityEndTime()));
+        final Date d = new Date();
+        etStarttime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickDialogUtil dateTimePickDialog = new DateTimePickDialogUtil(OneAtyDetail.this, d.getYear()+"年"+d.getMonth()+"月"+d.getDay()+"日 "+d.getHours()+":"+d.getMinutes());
+                dateTimePickDialog.dateTimePicKDialog(etStarttime);
+            }
+        });
+        etEndtime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DateTimePickDialogUtil dateTimePickDialog = new DateTimePickDialogUtil(OneAtyDetail.this, d.getYear()+"年"+d.getMonth()+"月"+d.getDay()+"日 "+d.getHours()+":"+d.getMinutes());
+                dateTimePickDialog.dateTimePicKDialog(etEndtime);
+            }
+        });
         String status="未开始";
         switch (mActivity.getActivityStatus()){
             case Symbols.Not_Start:
@@ -98,13 +123,63 @@ public class OneAtyDetail extends AppCompatActivity {
         statusList.setAdapter(arr_adapter);
     }
 
-    @OnClick({R.id.btn_create_aty, R.id.btn_shop_login})
+    @OnClick({R.id.btn_update_aty, R.id.btn_delete_aty})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_create_aty:
+            case R.id.btn_update_aty:
+                doNetWork(OfficalUrl.UpdateAtyUrl,true);
                 break;
-            case R.id.btn_shop_login:
+            case R.id.btn_delete_aty:
+                doNetWork(OfficalUrl.DeleteAtyUrl,false);
                 break;
         }
+    }
+    public void doNetWork(String url,boolean IsUpdate){
+        url = OfficalUrl.baseUrl+OfficalUrl.AtyBaseUrl+url ;
+        Map<String,String> params = new HashMap<>();
+        params.put("activityId",mActivity.getActivityId()+"");
+        if (IsUpdate){
+            params.put("activityName", URLEncoder.encode(etAtyname.getText().toString()));
+            params.put("activityAddr", URLEncoder.encode(etAtyAddr.getText().toString()));
+            params.put("startTime", URLEncoder.encode(etStarttime.getText().toString().replace("年","-").replace("月","-").replace("日","")));
+            params.put("endTime", URLEncoder.encode(etEndtime.getText().toString().replace("年","-").replace("月","-").replace("日","")));
+            params.put("activityCurPeople", "0");
+            params.put("activityMaxPopu", etAtyMaxPopu.getText().toString());
+            params.put("activiityMinPopu", etAtyMinPopu.getText().toString());
+            String status ;
+            if (statusList.getSelectedItem().toString().equals("未开始")){
+                status = "0";
+            }else if (statusList.getSelectedItem().toString().equals("已开始")){
+                status = "1";
+            }else {
+                status = "2";
+            }
+            params.put("activityStatus", status);
+        }
+
+        NetWorker.getInstance().get(UrlParseTool.parseParam(url,params), new NetWorker.ICallback() {
+            @Override
+            public void onResponse(int status, String result) {
+                if (status == NetWorker.HTTP_OK){
+                    Type t = new TypeToken<Map<String,Integer>>(){}.getType();
+                    Map<String,Integer> map = GSONTOOLS.getMap(result,t);
+                    int status_code = map.get(Status_Code.Status_Code);
+                    switch (status_code){
+                        case Status_Code.SUCCESS_STATUS:
+                            //跳转默认活动列表
+                            Toast.makeText(OneAtyDetail.this, "操作成功", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(OneAtyDetail.this,ActivityMain.class));
+                            break;
+                        case Status_Code.EXCEPTION_STATUS:
+                            Toast.makeText(OneAtyDetail.this, "数据操作异常,请联系数据库", Toast.LENGTH_SHORT).show();
+                            break;
+                        case Status_Code.FAILED:
+                            Toast.makeText(OneAtyDetail.this, "操作失败", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+            }
+        });
+
     }
 }

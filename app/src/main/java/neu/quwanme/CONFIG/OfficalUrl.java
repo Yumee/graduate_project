@@ -29,6 +29,12 @@ public class OfficalUrl {
 
     public final static String CreateAtyUrl = "androidCreateActivity";
 
+    public final static String UpdateAtyUrl = "androidUpdateActivity";
+
+    public final static String DeleteAtyUrl = "androidDeleteActivity";
+
+
+
     public final static String GetLastestActivity = "getLastestActivity";
 
     public final static String GetAllActivity = "getAllAty";

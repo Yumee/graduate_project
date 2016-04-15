@@ -1,5 +1,6 @@
 package neu.quwanme.shop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -58,7 +59,6 @@ public class ActivityMain extends AppCompatActivity {
         ButterKnife.bind(this);
         initData();
         initView();
-        getAtyList(OfficalUrl.GetAllActivity,1);
     }
 
     public void initView() {
@@ -71,6 +71,7 @@ public class ActivityMain extends AppCompatActivity {
                 // TODO: 2016/4/14 跳转商品详情页,直接将aty传过去，进行删，改操作
                 Intent i = new Intent(ActivityMain.this,OneAtyDetail.class);
                 Bundle b = new Bundle();
+                LogUtil.d("hzm","tart aty "+aty.toString());
                 b.putSerializable("aty",aty);
                 i.putExtras(b);
                 startActivity(i);
