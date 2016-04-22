@@ -60,8 +60,6 @@ public class StudentMainActivity extends AppCompatActivity {
 
     public void initView() {
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
 
     }
 

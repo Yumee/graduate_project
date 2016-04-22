@@ -61,7 +61,20 @@
             android:label="活动详情页"
             android:theme="@style/AppTheme"
             />
-
+        <activity
+            android:name=".shop.ShopDetail"
+            android:label="商家详情页"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".shop.ShopRank"
+            android:label="商家排名页"
+            android:theme="@style/AppTheme"
+            />
+        <activity
+            android:name=".student.StuOneAtyDetail"
+            android:theme="@style/AppTheme"
+            android:label="学生活动详情页"/>
     </application>
 
 </manifest>

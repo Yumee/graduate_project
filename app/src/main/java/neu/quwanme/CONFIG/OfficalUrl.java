@@ -10,18 +10,22 @@ public class OfficalUrl {
 
     public final static String testUrl = "http://192.168.13.44:8081/quwanmeserver/userAction/androidQueryUser";
 
-    public final static String StudentLoginUrl = "userAction/userLogin" ;
-
-    public final static String ShopLoginUrl = "shopAction/shopLogin" ;
-
-    public final static String StudentResgistUrl = "userAction/androidCreateUser";
-
-    public final static String ShopResgistUrl = "shopAction/androidCreateShop";
 
     public final static String SchoolListUrl ="schoolAction/getAllSchools";
 
+    /*****************************************shop related url*****************************************************/
+
+    public final static String ShopLoginUrl = "shopAction/shopLogin" ;
+
+    public final static String ShopResgistUrl = "shopAction/androidCreateShop";
+
+    public final static String ShopUpdatetUrl = "shopAction/androidUpdateShop";
+
+    public final static String getShopByRank = "shopAction/getShopByRank";
+
     public final static String CityListUrl ="shopAction/getAllCity";
 
+    /*****************************************shop related url*****************************************************/
 
     /*****************************************activity related url*****************************************************/
     public final static String AtyBaseUrl = "activityAction/" ;
@@ -33,8 +37,6 @@ public class OfficalUrl {
 
     public final static String DeleteAtyUrl = "androidDeleteActivity";
 
-
-
     public final static String GetLastestActivity = "getLastestActivity";
 
     public final static String GetAllActivity = "getAllAty";
@@ -45,9 +47,26 @@ public class OfficalUrl {
 
     public final static String GetFinishActivity = "getAtyFinsh";
 
+    public final static String GetUserLaestAty = "getUserLastestAty";
 
 
     /*****************************************activity related url*****************************************************/
+
+
+    /*****************************************user related url*****************************************************/
+    public final static String UserBaseUrl = "userAction/";
+
+    public final static String StudentLoginUrl = "userAction/userLogin" ;
+
+    public final static String StudentResgistUrl = "userAction/androidCreateUser";
+
+    public final static String UserJoinAtyUrl = "userJoin";
+
+
+
+    /*****************************************user related url*****************************************************/
+
+
 
 
 }

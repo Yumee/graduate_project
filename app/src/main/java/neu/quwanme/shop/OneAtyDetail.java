@@ -71,6 +71,12 @@ public class OneAtyDetail extends AppCompatActivity {
         initData();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(OneAtyDetail.this,ShopMainActivity.class));
+    }
+
     public void initData() {
         Intent i = this.getIntent();
         mActivity = (Activity) i.getSerializableExtra("aty");

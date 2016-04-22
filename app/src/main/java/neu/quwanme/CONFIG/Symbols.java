@@ -8,6 +8,8 @@ public class Symbols {
 
     public static final String citylist = "citylist";
     public static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
+    public static final String from = "from";
+
 
     /************************shop****************************/
     public static final String shop = "shop";
@@ -21,6 +23,11 @@ public class Symbols {
     public static final  String shopType = "shopType";
 
     public static final  String shopPassword = "shopPassword";
+
+    public static final  String fromShopRank = "fromShopRank";
+
+    public static final  String fromShopMain = "fromShopMain";
+
     /************************shop****************************/
     
     /************************user****************************/

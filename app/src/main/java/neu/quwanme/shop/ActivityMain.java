@@ -1,6 +1,5 @@
 package neu.quwanme.shop;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import neu.quwanme.CONFIG.OfficalUrl;
 import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
 import neu.quwanme.bean.Activity;
-import neu.quwanme.bean.School;
 import neu.quwanme.framwork.net.NetWorker;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
@@ -47,8 +45,6 @@ public class ActivityMain extends AppCompatActivity {
     TextView tvAtyFinish;
     @Bind(R.id.aty_list)
     LinearLayout atyList;
-    @Bind(R.id.ll_create_new_aty)
-    LinearLayout llCreateNewAty;
 
     public CommonListView commonListView;
 

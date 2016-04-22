@@ -1,12 +1,12 @@
 package neu.quwanme.student;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -14,14 +14,22 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import neu.quwanme.CONFIG.OfficalUrl;
+import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
 import neu.quwanme.bean.Activity;
 import neu.quwanme.framwork.net.NetWorker;
+import neu.quwanme.shop.OneAtyDetail;
 import neu.quwanme.tools.GSONTOOLS;
+import neu.quwanme.tools.LogUtil;
+import neu.quwanme.tools.PreferencesUtils;
+import neu.quwanme.tools.UrlParseTool;
+import neu.quwanme.view.CommonListView;
 
 /**
  * Created by Lonie233 on 2016/4/7.
@@ -30,68 +38,84 @@ import neu.quwanme.tools.GSONTOOLS;
  */
 public class LastestAty extends AppCompatActivity {
 
-    @Bind(R.id.list_aty)
-    ListView listAty;
 
-    private ArrayList<HashMap<String,Object>> itemList = new ArrayList<>();
+    @Bind(R.id.tv_latest_aty)
+    TextView tvLatestAty;
+    @Bind(R.id.tv_my_aty)
+    TextView tvMyAty;
+    @Bind(R.id.tv_my_deal)
+    TextView tvMyDeal;
+    @Bind(R.id.tv_history)
+    TextView tvHistory;
+    @Bind(R.id.aty_list)
+    LinearLayout atyList;
+    private ArrayList<HashMap<String, Object>> itemList = new ArrayList<>();
+    public CommonListView commonListView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lastestaty);
         ButterKnife.bind(this);
-        initData();
-        initListView();
+        commonListView = new CommonListView(this);
+        initView();
+        initData(OfficalUrl.GetUserLaestAty);
     }
 
-    @OnClick(R.id.list_aty)
-    public void onClick() {
+    public void initView(){
+        commonListView.setClickCallBack(new CommonListView.ClickCallBack() {
+            @Override
+            public void onItemClick(Activity aty) {
+                // TODO: 2016/4/19 点击列表项启动详情页
+                Intent i = new Intent(LastestAty.this,StuOneAtyDetail.class);
+                Bundle b = new Bundle();
+                LogUtil.d("hzm","tart aty "+aty.toString());
+                b.putSerializable("aty",aty);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
     }
-
     /**
      * 加载活动数据，设置进itemList
      */
-    public void initData(){
-        String url ="";
-        NetWorker.getInstance().get("", new NetWorker.ICallback() {
+    public void initData(String urlStr) {
+        String url = OfficalUrl.baseUrl + OfficalUrl.AtyBaseUrl + urlStr;
+        Map<String, String> params = new HashMap<>();
+        params.put(Symbols.userId, PreferencesUtils.getString(Symbols.userId));
+        params.put(Symbols.startPos,0+"");
+        params.put(Symbols.endPos,"8");
+        NetWorker.getInstance().get(UrlParseTool.parseParam(url, params), new NetWorker.ICallback() {
             @Override
             public void onResponse(int status, String result) {
-                if (status == NetWorker.HTTP_OK){
-                    Type type = new TypeToken<ArrayList<Activity>>(){}.getType();
-                    List<Activity> atyList = GSONTOOLS.getList(result,type);
-
-                    for (int i=0;i<atyList.size();i++){
-                        HashMap<String,Object> item = new HashMap<>();
-                        item.put("ItemTitle",atyList.get(i).getActivityName());
-                        String itemContent = "开始时间："+atyList.get(i).getActivityStartTime()
-                                            +" 结束时间："+atyList.get(i).getActivityEndTime()
-                                            +" 已报名人数："+atyList.get(i).getActivityCurPeople()
-                                            +" 活动地址："+atyList.get(i).getActivityAddr();
-                        item.put("ItemContent",atyList.get(i).getActivityStartTime()+itemContent);
-                        item.put("ItemImg",R.drawable.aty_icon);
-                        itemList.add(item);
+                if (status == NetWorker.HTTP_OK) {
+                    Type type = new TypeToken<ArrayList<Activity>>() {
+                    }.getType();
+                    List<Activity> list = GSONTOOLS.getList(result, type);
+                    if(list.size()>0){
+                        commonListView.setData(list);
+                        atyList.removeAllViews();
+                        atyList.addView(commonListView);
                     }
                 }
             }
         });
     }
-    public void initListView(){
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this,
-                                        itemList,
-                                        R.layout.list_aty_item_layout,
-                                        new String[]{"ItemTitle","ItemContent","ItemImg"},
-                                        new int[]{R.id.aty_item_title,R.id.aty_item_content,R.id.aty_item_img});
-        listAty.setAdapter(simpleAdapter);
-        listAty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 2016/4/7 获取点击item的信息，跳转活动详情页
-            }
-        });
+
+    @OnClick({R.id.tv_latest_aty, R.id.tv_my_aty, R.id.tv_my_deal, R.id.tv_history})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_latest_aty:
+                initData(OfficalUrl.GetUserLaestAty);
+                break;
+            case R.id.tv_my_aty:
+                break;
+            case R.id.tv_my_deal:
+                break;
+            case R.id.tv_history:
+                break;
+        }
     }
 
-    public class Item{
-
-    }
 }

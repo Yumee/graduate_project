@@ -16,6 +16,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
+import neu.quwanme.bean.Shop;
+import neu.quwanme.bean.ShopDeal;
 import neu.quwanme.tools.PreferencesUtils;
 
 /**
@@ -69,6 +71,12 @@ public class ShopMainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
+
     @OnClick({R.id.imageView, R.id.rl_manage_aty, R.id.rl_my_aty, R.id.rl_person_info, R.id.rl_shop_rank_list, R.id.tv_scorll_text})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -80,8 +88,10 @@ public class ShopMainActivity extends AppCompatActivity {
             case R.id.rl_my_aty:
                 break;
             case R.id.rl_person_info:
+                startActivity(new Intent(this, ShopDetail.class).putExtra(Symbols.from,Symbols.fromShopMain));
                 break;
             case R.id.rl_shop_rank_list:
+                startActivity(new Intent(this,ShopRank.class));
                 break;
             case R.id.tv_scorll_text:
                 break;
