@@ -46,6 +46,11 @@ public class NetWorkerVolleyImpl {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     LogUtil.e(CONFIG.MYTAG, "volley get error " +volleyError.toString());
+                    if (NoConnectionError.class.isInstance(volleyError)){
+                        Toast.makeText(WanApplication.getAppContext(), "哎呀，没连上服务器", Toast.LENGTH_SHORT).show();
+                    }else if (volleyError.networkResponse.statusCode == 404){
+                        Toast.makeText(WanApplication.getAppContext(), "哎呀，服务器出错了", Toast.LENGTH_SHORT).show();
+                    }
                     if (volleyError.networkResponse != null) {
                         if (volleyError.networkResponse.statusCode == 302) {
                             int index = url.lastIndexOf("http");

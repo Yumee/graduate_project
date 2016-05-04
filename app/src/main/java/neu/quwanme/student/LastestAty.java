@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -24,7 +24,6 @@ import neu.quwanme.CONFIG.Symbols;
 import neu.quwanme.R;
 import neu.quwanme.bean.Activity;
 import neu.quwanme.framwork.net.NetWorker;
-import neu.quwanme.shop.OneAtyDetail;
 import neu.quwanme.tools.GSONTOOLS;
 import neu.quwanme.tools.LogUtil;
 import neu.quwanme.tools.PreferencesUtils;
@@ -39,18 +38,16 @@ import neu.quwanme.view.CommonListView;
 public class LastestAty extends AppCompatActivity {
 
 
-    @Bind(R.id.tv_latest_aty)
-    TextView tvLatestAty;
-    @Bind(R.id.tv_my_aty)
-    TextView tvMyAty;
-    @Bind(R.id.tv_my_deal)
-    TextView tvMyDeal;
-    @Bind(R.id.tv_history)
-    TextView tvHistory;
     @Bind(R.id.aty_list)
     LinearLayout atyList;
-    private ArrayList<HashMap<String, Object>> itemList = new ArrayList<>();
+    String from ="";
     public CommonListView commonListView;
+    public StuOneAtyDetail.RefreshCallBack opCallback = new StuOneAtyDetail.RefreshCallBack() {
+        @Override
+        public void opCallBack(String url) {
+            initData(url);
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +56,14 @@ public class LastestAty extends AppCompatActivity {
         ButterKnife.bind(this);
         commonListView = new CommonListView(this);
         initView();
+        //默认加载最新活动
+        from = Symbols.fromLastestAty;
+        initData(OfficalUrl.GetUserLaestAty);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData(OfficalUrl.GetUserLaestAty);
     }
 
@@ -72,10 +77,18 @@ public class LastestAty extends AppCompatActivity {
                 LogUtil.d("hzm","tart aty "+aty.toString());
                 b.putSerializable("aty",aty);
                 i.putExtras(b);
+                i.putExtra(Symbols.from,from);
                 startActivity(i);
+                startActivityForResult(i,1);
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     /**
      * 加载活动数据，设置进itemList
      */
@@ -89,6 +102,7 @@ public class LastestAty extends AppCompatActivity {
             @Override
             public void onResponse(int status, String result) {
                 if (status == NetWorker.HTTP_OK) {
+                    commonListView.clearData();
                     Type type = new TypeToken<ArrayList<Activity>>() {
                     }.getType();
                     List<Activity> list = GSONTOOLS.getList(result, type);
@@ -96,6 +110,8 @@ public class LastestAty extends AppCompatActivity {
                         commonListView.setData(list);
                         atyList.removeAllViews();
                         atyList.addView(commonListView);
+                    }else {
+                        Toast.makeText(LastestAty.this, "无数据哦", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -103,17 +119,23 @@ public class LastestAty extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.tv_latest_aty, R.id.tv_my_aty, R.id.tv_my_deal, R.id.tv_history})
+    @OnClick({R.id.tv_latest_aty, R.id.tv_my_aty, R.id.tv_my_remo, R.id.tv_history})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_latest_aty:
+                from = Symbols.fromLastestAty;
                 initData(OfficalUrl.GetUserLaestAty);
                 break;
-            case R.id.tv_my_aty:
+            case R.id.tv_my_remo:
+                from = Symbols.fromRecomAty;
                 break;
-            case R.id.tv_my_deal:
+            case R.id.tv_my_aty:
+                initData(OfficalUrl.GetUserAty);
+                from = Symbols.fromMyAty;
                 break;
             case R.id.tv_history:
+                from = Symbols.fromMyAtyHis;
+                initData(OfficalUrl.GetUserHisAty);
                 break;
         }
     }

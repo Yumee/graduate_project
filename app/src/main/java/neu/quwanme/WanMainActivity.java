@@ -13,7 +13,10 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import neu.quwanme.common.LoginActivity;
+import neu.quwanme.intro.MyIntro1;
+import neu.quwanme.intro.MyIntro2;
 import neu.quwanme.tools.LogUtil;
+import neu.quwanme.tools.PreferencesUtils;
 
 public class WanMainActivity extends AppCompatActivity {
 
@@ -34,6 +37,26 @@ public class WanMainActivity extends AppCompatActivity {
             }
         });
        LogUtil.e("hzm", getLocalIpAddress());
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                boolean isFirstStart = true ;//PreferencesUtils.getBoolean("firstStart", true);
+
+                if (isFirstStart) {
+
+                    Intent i = new Intent(WanMainActivity.this, MyIntro2.class);
+                    startActivity(i);
+
+                    PreferencesUtils.putBoolean("firstStart", false);
+
+                }
+            }
+        });
+
+        t.start();
+
     }
 
     private String getLocalIpAddress() {

@@ -10,6 +10,12 @@ public class Symbols {
     public static final String dateFormat = "yyyy-MM-dd HH:mm:ss";
     public static final String from = "from";
 
+    /************************user main****************************/
+    public static final String fromLastestAty = "fromLastestAty";
+    public static final String fromRecomAty = "fromRecomAty";
+    public static final String fromMyAty = "fromMyAty";
+    public static final String fromMyAtyHis = "fromMyAtyHis";
+
 
     /************************shop****************************/
     public static final String shop = "shop";
@@ -57,6 +63,7 @@ public class Symbols {
     public final static String cityName ="cityName" ;
     public final static String startPos ="startPos" ;
     public final static String endPos ="endPos" ;
+    public final static String activityId ="activityId" ;
 
     public final static String ListType ="listtype" ;
 

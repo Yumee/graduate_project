@@ -27,7 +27,7 @@
             android:background="@color/sky_blue"
             android:text="活动推荐"
             android:layout_margin="2dp"
-            android:id="@+id/tv_my_deal"/>
+            android:id="@+id/tv_my_remo"/>
         <TextView
             android:layout_width="0dp"
             android:layout_weight="1"

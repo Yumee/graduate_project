@@ -23,25 +23,7 @@ import neu.quwanme.R;
  */
 public class StudentMainActivity extends AppCompatActivity {
 
-    ActionBarDrawerToggle actionBarDrawerToggle;
-    @Bind(R.id.imageView)
-    ImageView imageView;
-    @Bind(R.id.tv_user_name)
-    TextView tvUserName;
-    @Bind(R.id.tv_user_age)
-    TextView tvUserAge;
-    @Bind(R.id.tv_user_favor)
-    TextView tvUserFavor;
-    @Bind(R.id.tv_scorll_text)
-    TextView tvScorllText;
-    @Bind(R.id.rl_last_aty)
-    RelativeLayout rlLastAty;
-    @Bind(R.id.rl_my_aty)
-    RelativeLayout rlMyAty;
-    @Bind(R.id.rl_person_info)
-    RelativeLayout rlPersonInfo;
-    @Bind(R.id.rl_shop_rank_list)
-    RelativeLayout rlShopRankList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

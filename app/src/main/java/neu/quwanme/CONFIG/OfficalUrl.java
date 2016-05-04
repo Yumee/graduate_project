@@ -49,6 +49,10 @@ public class OfficalUrl {
 
     public final static String GetUserLaestAty = "getUserLastestAty";
 
+    public final static String GetUserAty = "getUserAty";
+
+    public final static String GetUserHisAty = "getUserHisAty";
+
 
     /*****************************************activity related url*****************************************************/
 
@@ -61,6 +65,8 @@ public class OfficalUrl {
     public final static String StudentResgistUrl = "userAction/androidCreateUser";
 
     public final static String UserJoinAtyUrl = "userJoin";
+
+    public final static String UserQuitAtyUrl = "userQuit";
 
 
 

@@ -7,21 +7,25 @@ android {
     defaultConfig {
         applicationId "neu.myapplication"
         minSdkVersion 14
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
+}
+repositories {
+    mavenCentral()
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:support-v4:22.1.0'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:support-v4:23.0.0'
     compile files('libs/gson-2.2.2.jar')
     compile files('libs/httpmime-4.2.5.jar')
     compile files('libs/volley.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
     compile files('libs/universal-image-loader-1.9.5-sources.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'com.github.paolorotolo:appintro:3.4.0' //引导页插件
 }

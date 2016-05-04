@@ -54,7 +54,7 @@ public class GSONTOOLS {
          }
 
          if (list.isEmpty()){
-             LogUtil.e("ERROR","gson list decode error");
+             LogUtil.e("ERROR","gson list is empty");
          }
 
          return list;

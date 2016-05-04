@@ -66,7 +66,9 @@ public class CommonListView extends RelativeLayout {
         });
     }
     public void clearData(){
-
+        if (data!=null&&!data.isEmpty()) {
+            data.clear();
+        }
     }
     public interface ClickCallBack{
         public void onItemClick(Activity aty);

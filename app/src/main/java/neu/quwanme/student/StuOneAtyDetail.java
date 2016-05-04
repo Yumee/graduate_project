@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import neu.quwanme.shop.ActivityMain;
 import neu.quwanme.tools.DateTimePickDialogUtil;
 import neu.quwanme.tools.DateTools;
 import neu.quwanme.tools.GSONTOOLS;
+import neu.quwanme.tools.PreferencesUtils;
 import neu.quwanme.tools.UrlParseTool;
 
 /**
@@ -59,11 +61,15 @@ public class StuOneAtyDetail extends AppCompatActivity {
     TextView etEndtime;
     @Bind(R.id.status_list)
     TextView statusList;
+    @Bind(R.id.ly_user_join_del_btn)
+    LinearLayout btn1 ;
+    @Bind(R.id.ly_user_cancel_join_btn)
+    LinearLayout btnCancelJoin ;
 
     private Activity mActivity;
+    private RefreshCallBack mRefreshCallBack;
+    public int fromWhere = 0 ;//0 最新活动  1活动推荐  2我的参与   3  历史活动
 
-    private List<String> statusname = new ArrayList<>();
-    private ArrayAdapter<String> arr_adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,6 +87,22 @@ public class StuOneAtyDetail extends AppCompatActivity {
     public void initData() {
         Intent i = this.getIntent();
         mActivity = (Activity) i.getSerializableExtra("aty");
+        if (i.getStringExtra(Symbols.from)==null){
+            Toast.makeText(this, "来源错误", Toast.LENGTH_SHORT).show();
+        }else {
+            String from = i.getStringExtra(Symbols.from);
+            if (Symbols.fromLastestAty.equals(from)){
+                fromWhere = 0 ;
+            }else if (Symbols.fromRecomAty.equals(from)){
+                fromWhere = 1 ;
+            }else if (Symbols.fromMyAty.equals(from)){
+                fromWhere = 2;
+            }else if (Symbols.fromMyAtyHis.equals(from)){
+                fromWhere = 3;
+            }else {
+                Toast.makeText(this, "未知来源", Toast.LENGTH_SHORT).show();
+            }
+        }
         if (mActivity == null) {
             Toast.makeText(this, "aty参数传递错误", Toast.LENGTH_SHORT).show();
         }
@@ -111,22 +133,107 @@ public class StuOneAtyDetail extends AppCompatActivity {
             }
         }
         statusList.setText(status);
+        //根据来源控制显示的按钮
+        if (fromWhere == 0 || fromWhere == 1){//最新活动
+            btn1.setVisibility(View.VISIBLE);
+            btnCancelJoin.setVisibility(View.GONE);
+        }else if (fromWhere == 2){//我的活动
+            btn1.setVisibility(View.GONE);
+            btnCancelJoin.setVisibility(View.VISIBLE);
+        }else if (fromWhere == 3){
+            btn1.setVisibility(View.GONE);
+            btnCancelJoin.setVisibility(View.GONE);
+        }
     }
 
-    @OnClick({R.id.btn_join, R.id.btn_delete_aty})
+    @OnClick({R.id.btn_join,R.id.btn_cancel_join})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_join:
-                doNetWork(OfficalUrl.UserJoinAtyUrl, true);
+                doNetWork(OfficalUrl.UserJoinAtyUrl, 1);
                 break;
-            case R.id.btn_delete_aty:
-                doNetWork(OfficalUrl.DeleteAtyUrl, false);
+            case R.id.btn_cancel_join:
+                doNetWork(OfficalUrl.UserQuitAtyUrl,2);
                 break;
         }
     }
 
-    public void doNetWork(String url, boolean IsUpdate) {
-        url = OfficalUrl.baseUrl + OfficalUrl.AtyBaseUrl + url;
+    public void doNetWork(String url, final int op) {
 
+        Map<String,String> params = new HashMap<>();
+
+        switch (op){
+//            case 0://删除
+//            {
+//                url = OfficalUrl.baseUrl + OfficalUrl.AtyBaseUrl +url;
+//                params.put(Symbols.activityId,mActivity.getActivityId()+"");
+//            }
+//            break;
+            case 1://加入
+                {
+                    url = OfficalUrl.baseUrl + OfficalUrl.UserBaseUrl + url;
+                    params.put(Symbols.userId, PreferencesUtils.getString(Symbols.userId));
+                    params.put(Symbols.activityId,mActivity.getActivityId()+"");
+                }
+                break;
+            case 2://退出
+                {
+                    url = OfficalUrl.baseUrl + OfficalUrl.UserBaseUrl + url;
+                    params.put(Symbols.userId, PreferencesUtils.getString(Symbols.userId));
+                    params.put(Symbols.activityId,mActivity.getActivityId()+"");
+                }
+            break;
+
+        }
+
+        NetWorker.getInstance().get(UrlParseTool.parseParam(url,params), new NetWorker.ICallback() {
+            @Override
+            public void onResponse(int status, String result) {
+                if (NetWorker.HTTP_OK == status){
+                    // TODO: 2016/4/22 处理返回结果
+                    Type type = new TypeToken<Map<String,Integer>>(){}.getType();
+                    Map<String,Integer> map = GSONTOOLS.getMap(result,type);
+                    if (map.get(Status_Code.Status_Code)==Status_Code.SUCCESS_STATUS){
+                        switch (op){
+                            case 0:
+                                Toast.makeText(StuOneAtyDetail.this, "删除活动成功", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 1:
+                                Toast.makeText(StuOneAtyDetail.this, "报名成功", Toast.LENGTH_SHORT).show();
+                                break;
+                            case 2:
+                                Toast.makeText(StuOneAtyDetail.this, "退出成功", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        );
+
+        onBackPressed();
+
+//        // TODO: 2016/4/22 操作完成，返回列表页，刷新页面
+//        switch (fromWhere){
+//            case 0://最新活动
+//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserLaestAty);
+//                break;
+//            case 1://活动推荐
+//                break;
+//            case 2://我的参与
+//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserAty);
+//                break;
+//            case 3://历史活动
+//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserHisAty);
+//                break;
+//        }
     }
+    interface RefreshCallBack{
+        void opCallBack(String url);
+    }
+
+    public void setmRefreshCallBack(RefreshCallBack mRefreshCallBack) {
+        this.mRefreshCallBack = mRefreshCallBack;
+    }
+
 }
