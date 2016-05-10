@@ -63,7 +63,7 @@ public class StudentDetail extends AppCompatActivity {
         etUserNickname.setText(PreferencesUtils.getString(Symbols.userNickName));
 //        etUserAddr.setText(PreferencesUtils.getString(Symbols.));
         etUserPwd.setText(PreferencesUtils.getString(Symbols.userPassword));
-        etUserNumber.setText(PreferencesUtils.getString(Symbols.userNumber).substring(0,PreferencesUtils.getString(Symbols.userNumber).length()-2));
+        etUserNumber.setText(PreferencesUtils.getString(Symbols.userNumber).substring(0,PreferencesUtils.getString(Symbols.userNumber).length()-2));//显示成证书类型
         etUserAge.setText(PreferencesUtils.getString(Symbols.userAge).substring(0,PreferencesUtils.getString(Symbols.userAge).length()-2));
     }
 
@@ -73,7 +73,7 @@ public class StudentDetail extends AppCompatActivity {
         params.put(Symbols.userId,PreferencesUtils.getString(Symbols.userId));
         params.put(Symbols.userRealName,etUserName.getText().toString());
         params.put(Symbols.userNickName,etUserNickname.getText().toString());
-        params.put(Symbols.userAge,etUserAge.getText().toString().substring(0,etUserAge.getText().toString().length()-2));
+        params.put(Symbols.userAge,etUserAge.getText().toString().substring(0,etUserAge.getText().toString().length()-2));//去掉.0 避免类型转换错误
         params.put(Symbols.userNumber,etUserNumber.getText().toString().substring(0,etUserAge.getText().toString().length()-2));
 //        params.put(Symbols.cityName,etUserAddr.getText().toString());
 
