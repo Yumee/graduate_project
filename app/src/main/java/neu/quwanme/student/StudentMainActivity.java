@@ -16,6 +16,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import neu.quwanme.R;
+import neu.quwanme.shop.ShopRank;
 
 /**
  * Created by Lonie233 on 2016/3/21.
@@ -62,7 +63,8 @@ public class StudentMainActivity extends AppCompatActivity {
                 // TODO: 2016/4/7 查看，修改个人信息 
                 break;
             case R.id.rl_shop_rank_list:
-                // TODO: 2016/4/7 查看商家排名 
+                // TODO: 2016/4/7 查看商家排名
+                startActivity(new Intent(this,ShopRank.class));
                 break;
         }
     }
