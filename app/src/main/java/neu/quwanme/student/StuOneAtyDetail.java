@@ -84,6 +84,13 @@ public class StuOneAtyDetail extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * 参加或者退出活动之后，返回到列表页
+     */
+    public void finshOP(){
+        onBackPressed();
+    }
+
     public void initData() {
         Intent i = this.getIntent();
         mActivity = (Activity) i.getSerializableExtra("aty");
@@ -158,6 +165,11 @@ public class StuOneAtyDetail extends AppCompatActivity {
         }
     }
 
+    /**
+     * 参加活动还是退出活动
+     * @param url
+     * @param op
+     */
     public void doNetWork(String url, final int op) {
 
         Map<String,String> params = new HashMap<>();
@@ -211,22 +223,8 @@ public class StuOneAtyDetail extends AppCompatActivity {
         }
         );
 
-        onBackPressed();
+        finshOP();
 
-//        // TODO: 2016/4/22 操作完成，返回列表页，刷新页面
-//        switch (fromWhere){
-//            case 0://最新活动
-//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserLaestAty);
-//                break;
-//            case 1://活动推荐
-//                break;
-//            case 2://我的参与
-//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserAty);
-//                break;
-//            case 3://历史活动
-//                mRefreshCallBack.opCallBack(OfficalUrl.GetUserHisAty);
-//                break;
-//        }
     }
     interface RefreshCallBack{
         void opCallBack(String url);

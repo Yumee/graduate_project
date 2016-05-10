@@ -47,6 +47,7 @@ public class ActivityMain extends AppCompatActivity {
     LinearLayout atyList;
 
     public CommonListView commonListView;
+    int fromWhere =  0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,9 +71,27 @@ public class ActivityMain extends AppCompatActivity {
                 LogUtil.d("hzm","tart aty "+aty.toString());
                 b.putSerializable("aty",aty);
                 i.putExtras(b);
-                startActivity(i);
+//                startActivity(i);
+                startActivityForResult(i,fromWhere);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (0 == fromWhere) {
+            getAtyList(OfficalUrl.GetAllActivity,1);
+        } else if (1 == fromWhere) {
+            getAtyList(OfficalUrl.GetLastestActivity, 1);
+        } else if (2 == fromWhere) {
+            getAtyList(OfficalUrl.GetOrganizingActivity, 1);
+        } else if (3 == fromWhere){
+            getAtyList(OfficalUrl.GetgetOrganizedOverActivity, 1);
+        }else  if (4 == fromWhere){
+            getAtyList(OfficalUrl.GetFinishActivity, 1);
+        }else {
+
+        }
     }
 
     public void initData() {
@@ -103,18 +122,23 @@ public class ActivityMain extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_aty_all:
+                fromWhere =  0;
                 getAtyList(OfficalUrl.GetAllActivity,1);
                 break;
             case R.id.tv_aty_ing:
+                fromWhere =  1;
                 getAtyList(OfficalUrl.GetLastestActivity, 1);
                 break;
             case R.id.tv_aty_organize_ing:
+                fromWhere =  2;
                 getAtyList(OfficalUrl.GetOrganizingActivity, 1);
                 break;
             case R.id.tv_aty_organize_over:
+                fromWhere =  3;
                 getAtyList(OfficalUrl.GetgetOrganizedOverActivity, 1);
                 break;
             case R.id.tv_aty_finish:
+                fromWhere =  4;
                 getAtyList(OfficalUrl.GetFinishActivity, 1);
                 break;
             case R.id.ll_create_new_aty:

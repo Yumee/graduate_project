@@ -74,7 +74,6 @@ public class OneAtyDetail extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(OneAtyDetail.this,ShopMainActivity.class));
     }
 
     public void initData() {

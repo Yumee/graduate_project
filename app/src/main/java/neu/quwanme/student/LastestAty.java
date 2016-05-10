@@ -41,6 +41,7 @@ public class LastestAty extends AppCompatActivity {
     @Bind(R.id.aty_list)
     LinearLayout atyList;
     String from ="";
+    int fromWhere =  0;
     public CommonListView commonListView;
     public StuOneAtyDetail.RefreshCallBack opCallback = new StuOneAtyDetail.RefreshCallBack() {
         @Override
@@ -64,7 +65,7 @@ public class LastestAty extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData(OfficalUrl.GetUserLaestAty);
+//        initData(OfficalUrl.GetUserLaestAty);
     }
 
     public void initView(){
@@ -78,8 +79,8 @@ public class LastestAty extends AppCompatActivity {
                 b.putSerializable("aty",aty);
                 i.putExtras(b);
                 i.putExtra(Symbols.from,from);
-                startActivity(i);
-                startActivityForResult(i,1);
+//                startActivity(i);
+                startActivityForResult(i,fromWhere);
             }
         });
     }
@@ -87,6 +88,17 @@ public class LastestAty extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (0 == fromWhere) {
+            initData(OfficalUrl.GetUserLaestAty);
+        } else if (1 == fromWhere) {
+
+        } else if (2 == fromWhere) {
+            initData(OfficalUrl.GetUserAty);
+        } else if (3 == fromWhere){
+            initData(OfficalUrl.GetUserHisAty);
+        }else {
+
+        }
     }
 
     /**
@@ -106,13 +118,10 @@ public class LastestAty extends AppCompatActivity {
                     Type type = new TypeToken<ArrayList<Activity>>() {
                     }.getType();
                     List<Activity> list = GSONTOOLS.getList(result, type);
-                    if(list.size()>0){
                         commonListView.setData(list);
                         atyList.removeAllViews();
                         atyList.addView(commonListView);
-                    }else {
-                        Toast.makeText(LastestAty.this, "无数据哦", Toast.LENGTH_SHORT).show();
-                    }
+
                 }
             }
         });
@@ -124,17 +133,21 @@ public class LastestAty extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.tv_latest_aty:
                 from = Symbols.fromLastestAty;
+                fromWhere =  0;
                 initData(OfficalUrl.GetUserLaestAty);
                 break;
             case R.id.tv_my_remo:
                 from = Symbols.fromRecomAty;
+                fromWhere = 1 ;
                 break;
             case R.id.tv_my_aty:
                 initData(OfficalUrl.GetUserAty);
                 from = Symbols.fromMyAty;
+                fromWhere = 2 ;
                 break;
             case R.id.tv_history:
                 from = Symbols.fromMyAtyHis;
+                fromWhere = 3 ;
                 initData(OfficalUrl.GetUserHisAty);
                 break;
         }
