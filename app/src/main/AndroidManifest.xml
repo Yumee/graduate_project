@@ -39,6 +39,11 @@
             android:theme="@style/AppTheme"
             />
         <activity
+            android:name=".student.StudentDetail"
+            android:label="学生信息详情界面"
+            android:theme="@style/AppTheme"
+            />
+        <activity
             android:name=".student.LastestAty"
             android:label="最新活动"
             android:theme="@style/AppTheme"

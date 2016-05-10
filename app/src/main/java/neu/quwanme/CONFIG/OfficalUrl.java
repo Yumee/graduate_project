@@ -68,6 +68,8 @@ public class OfficalUrl {
 
     public final static String UserQuitAtyUrl = "userQuit";
 
+    public final static String UserUpdataInfo ="updateUser" ;
+
 
 
     /*****************************************user related url*****************************************************/

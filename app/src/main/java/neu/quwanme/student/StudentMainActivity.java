@@ -16,6 +16,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import neu.quwanme.R;
+import neu.quwanme.shop.ShopMainActivity;
 import neu.quwanme.shop.ShopRank;
 
 /**
@@ -60,7 +61,8 @@ public class StudentMainActivity extends AppCompatActivity {
                 // TODO: 2016/4/7 查看我参与的（参与过的，报名的） 
                 break;
             case R.id.rl_person_info:
-                // TODO: 2016/4/7 查看，修改个人信息 
+                // TODO: 2016/4/7 查看，修改个人信息
+                startActivity(new Intent(this,StudentDetail.class));
                 break;
             case R.id.rl_shop_rank_list:
                 // TODO: 2016/4/7 查看商家排名
