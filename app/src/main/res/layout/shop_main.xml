@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="活动管理"/>
+                    android:text="他人活动"/>
            </RelativeLayout>
            <RelativeLayout
                android:layout_width="0dp"
@@ -155,7 +155,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
                    android:gravity="center"
-                   android:text="订单管理"/>
+                   android:text="我的活动"/>
            </RelativeLayout>
        </LinearLayout>
 
@@ -203,9 +203,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="20sp"
             android:id="@+id/tv_scorll_text"
-            android:text="滚动条"
-        />
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:text="去玩么公司最近推出新的商家加盟政策，强烈推荐各个商家速度加盟"
+             />
     </LinearLayout>
 
 </LinearLayout>
