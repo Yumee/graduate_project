@@ -79,6 +79,8 @@ public class Symbols {
 
     public static final String typelist = "typelist";
 
+    public static final String IsFromOtherAty = "IsFromOtherAty" ;//区分是我的活动，还是他人的活动，shop/user 公用
+
     /************************activity****************************/
 
 

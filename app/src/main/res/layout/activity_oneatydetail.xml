@@ -182,7 +182,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ly_shop_loginbtn"
+            android:id="@+id/ly_shop_op_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

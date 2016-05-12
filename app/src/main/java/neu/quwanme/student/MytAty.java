@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -35,7 +34,7 @@ import neu.quwanme.view.CommonListView;
  * 查看最新活动
  * 操作：点击查看详情，报名参与等
  */
-public class LastestAty extends AppCompatActivity {
+public class MytAty extends AppCompatActivity {
 
 
     @Bind(R.id.aty_list)
@@ -53,13 +52,14 @@ public class LastestAty extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lastestaty);
+        setContentView(R.layout.activity_myaty);
         ButterKnife.bind(this);
         commonListView = new CommonListView(this);
         initView();
         //默认加载最新活动
-        from = Symbols.fromLastestAty;
-        initData(OfficalUrl.GetUserLaestAty);
+        from = Symbols.fromMyAty;
+        fromWhere = 2 ;
+        initData(OfficalUrl.GetUserAty);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LastestAty extends AppCompatActivity {
             @Override
             public void onItemClick(Activity aty) {
                 // TODO: 2016/4/19 点击列表项启动详情页
-                Intent i = new Intent(LastestAty.this,StuOneAtyDetail.class);
+                Intent i = new Intent(MytAty.this,StuOneAtyDetail.class);
                 Bundle b = new Bundle();
                 LogUtil.d("hzm","tart aty "+aty.toString());
                 b.putSerializable("aty",aty);
@@ -88,10 +88,10 @@ public class LastestAty extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (0 == fromWhere) {
-            initData(OfficalUrl.GetUserLaestAty);
-        } else if (1 == fromWhere) {
-
+        if (2 == fromWhere) {
+            initData(OfficalUrl.GetUserAty);
+        } else if (3 == fromWhere){
+            initData(OfficalUrl.GetUserHisAty);
         }else {
 
         }
@@ -124,17 +124,18 @@ public class LastestAty extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.tv_latest_aty,  R.id.tv_my_remo})
+    @OnClick({R.id.tv_my_aty, R.id.tv_history})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_latest_aty:
-                from = Symbols.fromLastestAty;
-                fromWhere =  0;
-                initData(OfficalUrl.GetUserLaestAty);
+            case R.id.tv_my_aty:
+                initData(OfficalUrl.GetUserAty);
+                from = Symbols.fromMyAty;
+                fromWhere = 2 ;
                 break;
-            case R.id.tv_my_remo:
-                from = Symbols.fromRecomAty;
-                fromWhere = 1 ;
+            case R.id.tv_history:
+                from = Symbols.fromMyAtyHis;
+                fromWhere = 3 ;
+                initData(OfficalUrl.GetUserHisAty);
                 break;
         }
     }

@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="neu.quwanme">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
-
-        android:allowBackup="true"
         android:name=".WanApplication"
+        android:allowBackup="true"
         android:icon="@drawable/icon3"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -26,67 +26,69 @@
         <activity
             android:name=".common.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".common.RegisterActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".student.StudentMainActivity"
             android:label="学生主界面"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".student.StudentDetail"
             android:label="学生信息详情界面"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".student.MytAty"
+            android:label="我的活动"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".student.LastestAty"
             android:label="最新活动"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.ShopMainActivity"
             android:label="商家主界面"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.ActivityMain"
             android:label="商家活动管理界面"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.CreateAty"
             android:label="商家创建活动"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.OneAtyDetail"
             android:label="活动详情页"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.ShopDetail"
             android:label="商家详情页"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".shop.ShopRank"
             android:label="商家排名页"
-            android:theme="@style/AppTheme"
-            />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".student.StuOneAtyDetail"
-            android:theme="@style/AppTheme"
-            android:label="学生活动详情页"/>
-        <activity android:name=".intro.MyIntro1"
-            android:label="引导页"/>
-        <activity android:name=".intro.MyIntro2"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="引导页2"/>
+            android:label="学生活动详情页"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".intro.MyIntro1"
+            android:label="引导页" />
+        <activity
+            android:name=".intro.MyIntro2"
+            android:label="引导页2"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".student.PullingService">
+            <intent-filter>
+                <action android:name="com.ryantang.service.PollingService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

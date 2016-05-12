@@ -17,6 +17,7 @@ import java.util.Map;
 import neu.quwanme.WanApplication;
 import neu.quwanme.tools.CONFIG;
 import neu.quwanme.tools.LogUtil;
+import neu.quwanme.tools.TOAST;
 
 /**
  * Created by Lonie233 on 2016/3/11.
@@ -63,6 +64,7 @@ public class NetWorkerVolleyImpl {
                         callback.onResponse(volleyError.networkResponse.statusCode, volleyError.toString());
                         return;
                     }
+                    Toast.makeText(WanApplication.getAppContext(),"无法连接到服务器，请检查网络", Toast.LENGTH_SHORT).show();
                     callback.onResponse(NetWorker.HTTP_500,"无法连接到服务器");
                 }
 

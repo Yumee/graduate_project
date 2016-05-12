@@ -46,6 +46,19 @@ public class OfficalUrl {
     public final static String GetgetOrganizedOverActivity = "getAtyReady";
 
     public final static String GetFinishActivity = "getAtyFinsh";
+    /***************************************************************************/
+    public final static String GetLastestActivityNotMe = "getLastestActivityNotMe";
+
+    public final static String GetAllActivityNotMe = "getAllAtyNotMe";
+
+    public final static String GetOrganizingActivityNotMe = "getAtyNotReadyNotMe";
+
+    public final static String GetgetOrganizedOverActivityNotMe= "getAtyReadyNotMe";
+
+    public final static String GetFinishActivityNotMe = "getAtyFinshNotMe";
+    /*******************************************************************************/
+
+
 
     public final static String GetUserLaestAty = "getUserLastestAty";
 

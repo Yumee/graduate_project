@@ -30,21 +30,14 @@ import neu.quwanme.view.CommonListView;
 
 /**
  * Created by Lonie233 on 2016/4/11.
+ * 我的活动列表
  */
 public class ActivityMain extends AppCompatActivity {
 
-    @Bind(R.id.tv_aty_all)
-    TextView tvAtyAll;
-    @Bind(R.id.tv_aty_ing)
-    TextView tvAtyIng;
-    @Bind(R.id.tv_aty_organize_ing)
-    TextView tvAtyOrganizeIng;
-    @Bind(R.id.tv_aty_organize_over)
-    TextView tvAtyOrganizeOver;
-    @Bind(R.id.tv_aty_finish)
-    TextView tvAtyFinish;
+
     @Bind(R.id.aty_list)
     LinearLayout atyList;
+    boolean IsFromOtherAty  = false ;
 
     public CommonListView commonListView;
     int fromWhere =  0;
@@ -71,6 +64,7 @@ public class ActivityMain extends AppCompatActivity {
                 LogUtil.d("hzm","tart aty "+aty.toString());
                 b.putSerializable("aty",aty);
                 i.putExtras(b);
+                i.putExtra(Symbols.IsFromOtherAty,IsFromOtherAty);
 //                startActivity(i);
                 startActivityForResult(i,fromWhere);
             }
@@ -98,22 +92,43 @@ public class ActivityMain extends AppCompatActivity {
 
         Intent i = this.getIntent();
         int type = i.getIntExtra(Symbols.ListType, Symbols.AllAty);
-        switch (type){
-            case Symbols.AllAty:
-                getAtyList(OfficalUrl.GetAllActivity,1);
-                break;
-            case Symbols.Ing:
-                getAtyList(OfficalUrl.GetLastestActivity, 1);
-                break;
-            case Symbols.OrgIng:
-                getAtyList(OfficalUrl.GetOrganizingActivity, 1);
-                break;
-            case Symbols.Orged:
-                getAtyList(OfficalUrl.GetgetOrganizedOverActivity, 1);
-                break;
-            case Symbols.Finish:
-                getAtyList(OfficalUrl.GetFinishActivity, 1);
-                break;
+        IsFromOtherAty = i.getBooleanExtra(Symbols.IsFromOtherAty,false);
+        if (!IsFromOtherAty) {//来自我的活动
+            switch (type) {
+                case Symbols.AllAty:
+                    getAtyList(OfficalUrl.GetAllActivity, 1);
+                    break;
+                case Symbols.Ing:
+                    getAtyList(OfficalUrl.GetLastestActivity, 1);
+                    break;
+                case Symbols.OrgIng:
+                    getAtyList(OfficalUrl.GetOrganizingActivity, 1);
+                    break;
+                case Symbols.Orged:
+                    getAtyList(OfficalUrl.GetgetOrganizedOverActivity, 1);
+                    break;
+                case Symbols.Finish:
+                    getAtyList(OfficalUrl.GetFinishActivity, 1);
+                    break;
+            }
+        }else {//来自其他活动，获取其他shop发起的活动
+            switch (type) {
+                case Symbols.AllAty:
+                    getAtyList(OfficalUrl.GetAllActivityNotMe, 1);
+                    break;
+                case Symbols.Ing:
+                    getAtyList(OfficalUrl.GetLastestActivityNotMe, 1);
+                    break;
+                case Symbols.OrgIng:
+                    getAtyList(OfficalUrl.GetOrganizingActivityNotMe, 1);
+                    break;
+                case Symbols.Orged:
+                    getAtyList(OfficalUrl.GetgetOrganizedOverActivityNotMe, 1);
+                    break;
+                case Symbols.Finish:
+                    getAtyList(OfficalUrl.GetFinishActivityNotMe, 1);
+                    break;
+            }
         }
 
     }
